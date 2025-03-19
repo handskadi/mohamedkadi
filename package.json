@@ -10,12 +10,15 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "framer-motion": "^12.5.0",
+    "lucide-react": "^0.483.0",
     "next": "15.2.1",
     "next-sitemap": "^4.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
-    "react-simple-typewriter": "^5.0.1"
+    "react-simple-typewriter": "^5.0.1",
+    "rough-notation": "^0.5.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
