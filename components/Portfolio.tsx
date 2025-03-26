@@ -75,7 +75,7 @@ const Portfolio = () => {
         {/* ✅ Section Title */}
         <div className="text-center">
           <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white">Our Portfolio</h2>
-          <p className="mt-2 text-lg text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-lg text-gray-700 dark:text-gray-300">
             Discover our latest projects showcasing innovation and expertise.
           </p>
         </div>
@@ -86,11 +86,10 @@ const Portfolio = () => {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-5 py-2 text-sm font-semibold rounded-lg transition ${
-                activeCategory === category
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-600 hover:bg-blue-100 dark:text-gray-300"
-              }`}
+              className={`px-5 py-2 text-sm font-semibold rounded-lg transition ${activeCategory === category
+                ? "bg-blue-600 text-white"
+                : "text-gray-600 hover:bg-blue-100 dark:text-gray-300"
+                }`}
             >
               {category.replace("-", " ").toUpperCase()}
             </button>

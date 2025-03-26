@@ -69,7 +69,7 @@ const Testimonials = () => {
                 className="w-10 h-10 rounded-full object-cover border border-gray-300"
               />
               <div>
-                <h6 className="font-bold text-sm text-gray-900 dark:text-white">{testimonial.name}</h6>
+                <p className="font-bold text-sm text-gray-900 dark:text-white">{testimonial.name}</p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">{testimonial.role}</p>
               </div>
             </div>

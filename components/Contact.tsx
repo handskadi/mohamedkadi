@@ -109,7 +109,7 @@ const ContactDetail: React.FC<ContactDetailProps> = ({ icon, title, content }) =
       <span className="text-2xl">{icon}</span>
     </div>
     <div>
-      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h4>
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
       <p className="text-gray-600 dark:text-gray-400">{content}</p>
     </div>
   </div>

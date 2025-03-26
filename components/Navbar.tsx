@@ -1,6 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FiMenu, FiX, FiMoon, FiSun } from "react-icons/fi";
+import dynamic from "next/dynamic";
+const FiMenu = dynamic(() => import("react-icons/fi").then((mod) => mod.FiMenu));
+const FiX = dynamic(() => import("react-icons/fi").then((mod) => mod.FiX));
+const FiMoon = dynamic(() => import("react-icons/fi").then((mod) => mod.FiMoon));
+const FiSun = dynamic(() => import("react-icons/fi").then((mod) => mod.FiSun));
+
 import Image from "next/image";
 
 export default function Navbar() {
@@ -87,7 +92,7 @@ export default function Navbar() {
         </div>
 
         {/* ✅ Dark Mode Toggle on Right (Desktop Only) */}
-        <button onClick={toggleDarkMode} className="hidden md:block ml-4 text-foreground text-2xl transition-colors">
+        <button onClick={toggleDarkMode} className="hidden md:block ml-4 text-foreground text-2xl transition-colors" aria-label="Open settings">
           {darkMode ? <FiSun className="text-yellow-500" /> : <FiMoon className="text-gray-500" />}
         </button>
 
@@ -95,6 +100,7 @@ export default function Navbar() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-foreground text-2xl transition-colors"
+          aria-label="Open menu"
         >
           {isOpen ? <FiX /> : <FiMenu />}
         </button>

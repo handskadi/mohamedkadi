@@ -1,6 +1,15 @@
 "use client";
 
-import { FaCode, FaLaptopCode, FaLock, FaRocket, FaCloud, FaUsers } from "react-icons/fa";
+import dynamic from "next/dynamic";
+
+const FaCode = dynamic(() => import("react-icons/fa").then(mod => mod.FaCode));
+const FaLaptopCode = dynamic(() => import("react-icons/fa").then(mod => mod.FaLaptopCode));
+const FaLock = dynamic(() => import("react-icons/fa").then(mod => mod.FaLock));
+const FaRocket = dynamic(() => import("react-icons/fa").then(mod => mod.FaRocket));
+const FaCloud = dynamic(() => import("react-icons/fa").then(mod => mod.FaCloud));
+const FaUsers = dynamic(() => import("react-icons/fa").then(mod => mod.FaUsers));
+
+
 
 const features = [
   {
