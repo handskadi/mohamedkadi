@@ -1,15 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import dynamic from "next/dynamic";
-
-const FaLinkedin = dynamic(() => import("react-icons/fa").then((mod) => mod.FaLinkedin));
-const FaGithub = dynamic(() => import("react-icons/fa").then((mod) => mod.FaGithub));
-const FaStackOverflow = dynamic(() => import("react-icons/fa").then((mod) => mod.FaStackOverflow));
-const FaTwitter = dynamic(() => import("react-icons/fa").then((mod) => mod.FaTwitter));
-const FaFacebook = dynamic(() => import("react-icons/fa").then((mod) => mod.FaFacebook));
-const FaInstagram = dynamic(() => import("react-icons/fa").then((mod) => mod.FaInstagram));
-
+import { FaLinkedin, FaGithub, FaStackOverflow, FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 
 const teamMembers = [
   {

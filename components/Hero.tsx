@@ -28,9 +28,9 @@ const Hero = () => {
           </span>
         </h1>
         <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white md:text-4xl lg:text-4xl">
-      <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> ⵎⵓⵃⴰⵎⵎⴰⴷ</span> ⴽⴰⴷⵉ</h2>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> ⵎⵓⵃⴰⵎⵎⴰⴷ</span> ⴽⴰⴷⵉ</h2>
         <p className="my-4 text-sm text-slate-600 dark:text-gray-400 leading-relaxed">
-          I specialize in creating high-performance web applications, scalable architectures, and modern UI/UX solutions. 
+          I specialize in creating high-performance web applications, scalable architectures, and modern UI/UX solutions.
           Let&apos;s build your next great project together!
         </p>
 
@@ -48,14 +48,14 @@ const Hero = () => {
       </div>
 
       {/* ✅ Hero Image */}
-      <div className="md:h-[470px] flex justify-center pt-5">
+      <div className="flex justify-center items-center min-h-[400px] pt-5">
         <Image
           src="/mk-hero-image.webp"
           alt="Web Development Illustration"
           width={500}
           height={400}
-          className="w-full h-full md:object-contain dark:invert"
           priority
+          className="auto h-auto max-w-full max-h-[400px] md:max-h-[470px] object-contain dark:invert"
         />
       </div>
     </section>

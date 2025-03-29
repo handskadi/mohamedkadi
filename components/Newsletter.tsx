@@ -27,7 +27,7 @@ const Newsletter = () => {
       <div className="mx-auto max-w-screen-xl text-center">
         {/* ✅ Heading & Subheading */}
         <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl dark:text-white">
-        Subscribe to our Newsletter
+          Subscribe to our Newsletter
         </h2>
         <p className="mt-4 text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
           Subscribe to our newsletter and get the latest updates on web design trends, development tips, and insights on why digital presence is key to business success.

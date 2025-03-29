@@ -1,13 +1,6 @@
 "use client";
-import dynamic from "next/dynamic";
 
-const FaReact = dynamic(() => import("react-icons/fa").then(mod => mod.FaReact));
-const FaNodeJs = dynamic(() => import("react-icons/fa").then(mod => mod.FaNodeJs));
-const FaWordpress = dynamic(() => import("react-icons/fa").then(mod => mod.FaWordpress));
-const FaPython = dynamic(() => import("react-icons/fa").then(mod => mod.FaPython));
-const FaDatabase = dynamic(() => import("react-icons/fa").then(mod => mod.FaDatabase));
-const FaCss3Alt = dynamic(() => import("react-icons/fa").then(mod => mod.FaCss3Alt));
-
+import { FaReact, FaNodeJs, FaWordpress, FaPython, FaDatabase, FaCss3Alt } from "react-icons/fa";
 
 interface SkillsProps {
   heading?: string;

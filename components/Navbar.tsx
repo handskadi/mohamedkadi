@@ -1,11 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-const FiMenu = dynamic(() => import("react-icons/fi").then((mod) => mod.FiMenu));
-const FiX = dynamic(() => import("react-icons/fi").then((mod) => mod.FiX));
-const FiMoon = dynamic(() => import("react-icons/fi").then((mod) => mod.FiMoon));
-const FiSun = dynamic(() => import("react-icons/fi").then((mod) => mod.FiSun));
-
+import { FiMenu, FiX, FiMoon, FiSun } from "react-icons/fi";
 import Image from "next/image";
 
 export default function Navbar() {

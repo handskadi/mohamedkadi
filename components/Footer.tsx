@@ -1,20 +1,6 @@
 "use client";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-
-const FaGithub = dynamic(() =>
-  import("react-icons/fa6").then((mod) => mod.FaGithub)
-);
-const FaLinkedin = dynamic(() =>
-  import("react-icons/fa6").then((mod) => mod.FaLinkedin)
-);
-const FaSquareXTwitter = dynamic(() =>
-  import("react-icons/fa6").then((mod) => mod.FaSquareXTwitter)
-);
-const FaEnvelope = dynamic(() =>
-  import("react-icons/fa6").then((mod) => mod.FaEnvelope)
-);
-
+import { FaGithub, FaLinkedin, FaSquareXTwitter, FaEnvelope } from "react-icons/fa6";
 
 export default function Footer() {
   return (
