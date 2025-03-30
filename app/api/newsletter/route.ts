@@ -1,28 +1,33 @@
 import { NextResponse } from 'next/server'
-import clientPromise from '@/lib/mongodb'
+import { MongoClient } from 'mongodb'
+
+const uri = process.env.MONGODB_URI as string
+const client = new MongoClient(uri)
+const dbName = 'newsletterDB'
+const collectionName = 'subscribers'
 
 export async function POST(req: Request) {
-  const { email } = await req.json()
-
-  if (!email || !email.includes('@')) {
-    return NextResponse.json({ success: false, message: 'Invalid email address' }, { status: 400 })
-  }
-
   try {
-    const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB)
-    const collection = db.collection('subscribers')
+    const { email } = await req.json()
 
-    const existing = await collection.findOne({ email })
-    if (existing) {
-      return NextResponse.json({ success: false, message: 'Already subscribed.' })
+    if (!email || !email.includes('@')) {
+      return NextResponse.json({ success: false, message: 'Invalid email.' }, { status: 400 })
+    }
+
+    await client.connect()
+    const db = client.db(dbName)
+    const collection = db.collection(collectionName)
+
+    const exists = await collection.findOne({ email })
+
+    if (exists) {
+      return NextResponse.json({ success: false, message: 'Email already subscribed.' }, { status: 409 })
     }
 
     await collection.insertOne({ email, subscribedAt: new Date() })
-
     return NextResponse.json({ success: true, message: 'Subscribed successfully!' })
   } catch (error) {
-    console.error('Newsletter API error:', error)
-    return NextResponse.json({ success: false, message: 'Server error' }, { status: 500 })
+    console.error('Newsletter Error:', error)
+    return NextResponse.json({ success: false, message: 'Server error. Please try again.' }, { status: 500 })
   }
 }
