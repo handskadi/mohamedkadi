@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import clientPromise from '@/lib/mongodb' // adjust path if needed
+import clientPromise from '@/lib/mongodb'
 
 export async function POST(req: Request) {
   const { email } = await req.json()
 
   if (!email || !email.includes('@')) {
-    return NextResponse.json({ success: false, message: 'Invalid email' }, { status: 400 })
+    return NextResponse.json({ success: false, message: 'Invalid email address' }, { status: 400 })
   }
 
   try {
@@ -20,9 +20,9 @@ export async function POST(req: Request) {
 
     await collection.insertOne({ email, subscribedAt: new Date() })
 
-    return NextResponse.json({ success: true, message: 'Subscription successful!' })
+    return NextResponse.json({ success: true, message: 'Subscribed successfully!' })
   } catch (error) {
-    console.error('Newsletter error:', error)
-    return NextResponse.json({ success: false, message: 'Something went wrong' }, { status: 500 })
+    console.error('Newsletter API error:', error)
+    return NextResponse.json({ success: false, message: 'Server error' }, { status: 500 })
   }
 }
