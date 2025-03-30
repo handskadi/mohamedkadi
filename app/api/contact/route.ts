@@ -17,6 +17,7 @@ export async function POST(req: Request) {
   const siteOwnerEmail = {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER,
+    replyTo: email, // <-- 📩 sender's email shows in your reply
     subject: '📩 New Contact Form Submission',
     html: `
       <h2>New Contact Submission</h2>
@@ -27,10 +28,11 @@ export async function POST(req: Request) {
       <p>${message}</p>
     `,
   }
-
+  
   const autoReplyToSender = {
     from: process.env.EMAIL_USER,
     to: email,
+    replyTo: process.env.EMAIL_USER, // <-- your contact@ for replies
     subject: '✅ Thank you for contacting Mohamed KADI',
     html: `
       <p>Hi ${name},</p>
@@ -41,6 +43,7 @@ export async function POST(req: Request) {
       <p><a href="https://mohamedkadi.com">mohamedkadi.com</a></p>
     `,
   }
+  
 
   try {
     await transporter.sendMail(siteOwnerEmail)
