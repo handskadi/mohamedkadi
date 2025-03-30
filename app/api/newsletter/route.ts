@@ -1,33 +1,49 @@
-import { NextResponse } from 'next/server'
-import { MongoClient } from 'mongodb'
+import { createClient } from "@supabase/supabase-js";
+import { NextResponse } from "next/server";
 
-const uri = process.env.MONGODB_URI as string
-const client = new MongoClient(uri)
-const dbName = 'newsletterDB'
-const collectionName = 'subscribers'
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 export async function POST(req: Request) {
+  const { email } = await req.json();
+
+  if (!email || typeof email !== "string") {
+    return NextResponse.json(
+      { success: false, error: "Invalid email" },
+      { status: 400 }
+    );
+  }
+
   try {
-    const { email } = await req.json()
+    const { error } = await supabase
+      .from("newsletter_subscribers")
+      .insert([{ email }]);
 
-    if (!email || !email.includes('@')) {
-      return NextResponse.json({ success: false, message: 'Invalid email.' }, { status: 400 })
+    if (error) {
+      console.error("Supabase Error:", error.message);
+
+      // ✅ Detect duplicate error (PostgreSQL error code 23505)
+      if (error.code === "23505") {
+        return NextResponse.json(
+          { success: false, error: "Already subscribed" },
+          { status: 409 }
+        );
+      }
+
+      return NextResponse.json(
+        { success: false, error: "Insert failed" },
+        { status: 500 }
+      );
     }
 
-    await client.connect()
-    const db = client.db(dbName)
-    const collection = db.collection(collectionName)
-
-    const exists = await collection.findOne({ email })
-
-    if (exists) {
-      return NextResponse.json({ success: false, message: 'Email already subscribed.' }, { status: 409 })
-    }
-
-    await collection.insertOne({ email, subscribedAt: new Date() })
-    return NextResponse.json({ success: true, message: 'Subscribed successfully!' })
-  } catch (error) {
-    console.error('Newsletter Error:', error)
-    return NextResponse.json({ success: false, message: 'Server error. Please try again.' }, { status: 500 })
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error("Newsletter Error:", err);
+    return NextResponse.json(
+      { success: false, error: "Server Error" },
+      { status: 500 }
+    );
   }
 }

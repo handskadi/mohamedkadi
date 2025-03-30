@@ -11,9 +11,9 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@next/bundle-analyzer": "^15.2.4",
+    "@supabase/supabase-js": "^2.49.4",
     "framer-motion": "^12.5.0",
     "lucide-react": "^0.483.0",
-    "mongodb": "^6.15.0",
     "next": "15.2.1",
     "next-sitemap": "^4.2.3",
     "nodemailer": "^6.10.0",

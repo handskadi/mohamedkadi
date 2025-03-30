@@ -29,9 +29,12 @@ const Newsletter = () => {
       if (res.ok && data.success) {
         setMessage("✅ Thank you for subscribing!");
         setEmail("");
+      } else if (res.status === 409 || data.error === "Already subscribed") {
+        setMessage("❌ You’re already subscribed with this email.");
       } else {
         setMessage("❌ Subscription failed. Please try again.");
       }
+
     } catch (error) {
       setMessage("❌ An error occurred. Please try again later.");
     } finally {
