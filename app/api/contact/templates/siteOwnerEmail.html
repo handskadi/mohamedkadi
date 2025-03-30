@@ -2,102 +2,107 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>New Contact Message</title>
+    <title>New Contact Submission</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+      type="text/css"
+    />
     <style>
       body {
-        font-family: 'Segoe UI', sans-serif;
-        background-color: #f9fafb;
-        color: #333;
         margin: 0;
         padding: 0;
+        background: #ffffff;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
       }
-
-      .dark-mode {
-        background-color: #111827;
-        color: #e5e7eb;
-      }
-
       .container {
-        max-width: 600px;
-        margin: auto;
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 30px;
+        background: #ffffff;
+        border: 1px solid #eee;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
       }
-
-      .logo {
+      .header {
+        text-align: left;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      .header img {
+        max-width: 160px;
+      }
+      .title {
+        font-size: 26px;
+        color: #3d3bee;
+        margin: 30px 0 10px;
+        font-weight: bold;
+      }
+      .intro {
+        font-size: 16px;
+        color: #333;
+        line-height: 1.6;
+      }
+      .section {
+        margin-top: 30px;
+      }
+      .section-title {
+        background: #93f5ed;
+        display: inline-block;
+        padding: 5px 10px;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .details p {
+        margin: 6px 0;
+        font-size: 15px;
+        color: #555;
+      }
+      .footer {
+        margin-top: 40px;
+        font-size: 13px;
         text-align: center;
-        margin-bottom: 20px;
-      }
-
-      .logo img {
-        max-height: 60px;
-      }
-
-      h2 {
-        margin-top: 0;
-        color: #2563eb;
-      }
-
-      p {
-        margin: 0 0 12px;
-      }
-
-      footer {
-        margin-top: 32px;
-        border-top: 1px solid #e5e7eb;
-        padding-top: 20px;
-        font-size: 14px;
-        color: #6b7280;
-      }
-
-      .socials {
-        margin-top: 10px;
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-      }
-
-      .socials a {
-        text-decoration: none;
-        color: #2563eb;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        body {
-          background-color: #111827;
-          color: #e5e7eb;
-        }
-
-        .container {
-          background-color: #1f2937;
-        }
-
-        footer {
-          border-color: #374151;
-        }
+        color: #888;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="logo">
-        <img src="https://mohamedkadi.com/logo.png" alt="MK Web Logo" />
+      <div class="header">
+        <img
+          src="https://mohamedkadi.com/_next/image?url=%2Flogo-dark.png&w=384&q=75"
+          alt="Mohamed Kadi Logo"
+        />
       </div>
-      <h2>📩 New Contact Form Submission</h2>
-      <p><strong>Name:</strong> {{name}}</p>
-      <p><strong>Email:</strong> {{email}}</p>
-      <p><strong>Phone:</strong> {{phone}}</p>
-      <p><strong>Message:</strong><br />{{message}}</p>
 
-      <footer>
-        <p>This message was sent from the contact form on <a href="https://mohamedkadi.com">mohamedkadi.com</a>.</p>
-        <div class="socials">
-          <a href="https://linkedin.com/in/mohamedkadi">LinkedIn</a>
-          <a href="https://github.com/mohamedkadi">GitHub</a>
-          <a href="https://twitter.com/mohamedkadi">Twitter</a>
+      <div class="title">📬 New Contact Form Submission</div>
+
+      <div class="intro">
+        Hello Mohamed,<br /><br />
+        You've received a new contact request from your website. Below are the
+        details submitted through the form:
+      </div>
+
+      <div class="section">
+        <div class="section-title">Contact Details</div>
+        <div class="details">
+          <p><strong>Name:</strong> {{name}}</p>
+          <p><strong>Email:</strong> {{email}}</p>
+          <p><strong>Phone:</strong> {{phone}}</p>
+          <p><strong>Message:</strong><br />{{message}}</p>
         </div>
-      </footer>
+      </div>
+
+      <div class="footer">
+        <p>MohamedKadi.com | Fullstack Developer</p>
+        <p>This message was generated from the contact form.</p>
+      </div>
     </div>
   </body>
 </html>
