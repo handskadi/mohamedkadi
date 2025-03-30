@@ -1,8 +1,32 @@
-"use client";
-
 import React from "react";
 
 const Contact: React.FC = () => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      message: formData.get("message"),
+    };
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      alert("Message sent successfully!");
+      form.reset();
+    } else {
+      alert("There was an error sending your message.");
+    }
+  };
+
   return (
     <section className="bg-white dark:bg-gray-900 py-16" id="contact">
       <div className="max-w-5xl mx-auto px-6">
@@ -38,7 +62,7 @@ const Contact: React.FC = () => {
 
           {/* ✅ Contact Form */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-            <form>
+            <form onSubmit={handleSubmit}>
               <ContactInput type="text" name="name" placeholder="Your Name" />
               <ContactInput type="email" name="email" placeholder="Your Email" />
               <ContactInput type="text" name="phone" placeholder="Your Phone" />

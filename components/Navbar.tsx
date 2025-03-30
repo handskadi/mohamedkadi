@@ -50,7 +50,7 @@ export default function Navbar() {
     <nav className="w-full shadow-md bg-background transition-colors fixed top-0 left-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* ✅ Logo on Left */}
-        <a href="#" className="text-xl font-bold text-foreground transition-colors">
+        <a href="/" className="text-xl font-bold text-foreground transition-colors">
           <Image
             src="/logo-dark.png"
             alt="Mohamed KADI - MKweb logo"
