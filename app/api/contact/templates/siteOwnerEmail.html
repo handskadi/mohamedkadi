@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>New Contact Message</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f9fafb;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+
+      .dark-mode {
+        background-color: #111827;
+        color: #e5e7eb;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .logo img {
+        max-height: 60px;
+      }
+
+      h2 {
+        margin-top: 0;
+        color: #2563eb;
+      }
+
+      p {
+        margin: 0 0 12px;
+      }
+
+      footer {
+        margin-top: 32px;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 20px;
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      .socials {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .socials a {
+        text-decoration: none;
+        color: #2563eb;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111827;
+          color: #e5e7eb;
+        }
+
+        .container {
+          background-color: #1f2937;
+        }
+
+        footer {
+          border-color: #374151;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img src="https://mohamedkadi.com/logo.png" alt="MK Web Logo" />
+      </div>
+      <h2>📩 New Contact Form Submission</h2>
+      <p><strong>Name:</strong> {{name}}</p>
+      <p><strong>Email:</strong> {{email}}</p>
+      <p><strong>Phone:</strong> {{phone}}</p>
+      <p><strong>Message:</strong><br />{{message}}</p>
+
+      <footer>
+        <p>This message was sent from the contact form on <a href="https://mohamedkadi.com">mohamedkadi.com</a>.</p>
+        <div class="socials">
+          <a href="https://linkedin.com/in/mohamedkadi">LinkedIn</a>
+          <a href="https://github.com/mohamedkadi">GitHub</a>
+          <a href="https://twitter.com/mohamedkadi">Twitter</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
