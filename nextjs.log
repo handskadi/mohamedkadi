@@ -7,25 +7,22 @@
    - Network:      http://10.0.0.54:3000
 
  ✓ Starting...
- ✓ Ready in 358ms
- ⨯ The requested resource isn't a valid image for /images/blog-business-growth.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-fullstack.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-tech-trends.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-business-growth.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-fullstack.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-tech-trends.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-business-growth.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-fullstack.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-tech-trends.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-business-growth.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-fullstack.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-tech-trends.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-business-growth.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-fullstack.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-tech-trends.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-business-growth.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-fullstack.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-tech-trends.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-business-growth.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-fullstack.jpg received text/html; charset=utf-8
- ⨯ The requested resource isn't a valid image for /images/blog-tech-trends.jpg received text/html; charset=utf-8
+ ✓ Ready in 365ms
+MongoDB Error: MongoServerSelectionError: 00487372D47F0000:error:0A000438:SSL routines:ssl3_read_bytes:tlsv1 alert internal error:../deps/openssl/openssl/ssl/record/rec_layer_s3.c:1605:SSL alert number 80
+
+    at async d (.next/server/app/api/newsletter/route.js:1:828) {
+  errorLabelSet: Set(0) {},
+  reason: [TopologyDescription],
+  code: undefined,
+  [cause]: [MongoNetworkError: 00487372D47F0000:error:0A000438:SSL routines:ssl3_read_bytes:tlsv1 alert internal error:../deps/openssl/openssl/ssl/record/rec_layer_s3.c:1605:SSL alert number 80
+  ] {
+    errorLabelSet: Set(1) { 'ResetPool' },
+    beforeHandshake: false,
+    [cause]: [Error: 00487372D47F0000:error:0A000438:SSL routines:ssl3_read_bytes:tlsv1 alert internal error:../deps/openssl/openssl/ssl/record/rec_layer_s3.c:1605:SSL alert number 80
+    ] {
+      library: 'SSL routines',
+      reason: 'tlsv1 alert internal error',
+      code: 'ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR'
+    }
+  }
+}

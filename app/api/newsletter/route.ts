@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server'
-import { MongoClient } from 'mongodb'
-
-const uri = process.env.MONGODB_URI!
-const dbName = process.env.MONGODB_DB!
+import clientPromise from '@/lib/mongodb' // adjust path if needed
 
 export async function POST(req: Request) {
   const { email } = await req.json()
@@ -12,21 +9,20 @@ export async function POST(req: Request) {
   }
 
   try {
-    const client = await MongoClient.connect(uri)
-    const db = client.db(dbName)
+    const client = await clientPromise
+    const db = client.db(process.env.MONGODB_DB)
     const collection = db.collection('subscribers')
 
-    // Prevent duplicate subscriptions
     const existing = await collection.findOne({ email })
     if (existing) {
-      return NextResponse.json({ success: false, message: 'You are already subscribed.' })
+      return NextResponse.json({ success: false, message: 'Already subscribed.' })
     }
 
-    // Insert new subscriber
     await collection.insertOne({ email, subscribedAt: new Date() })
+
     return NextResponse.json({ success: true, message: 'Subscription successful!' })
   } catch (error) {
-    console.error('MongoDB Error:', error)
-    return NextResponse.json({ success: false, message: 'Server error' }, { status: 500 })
+    console.error('Newsletter error:', error)
+    return NextResponse.json({ success: false, message: 'Something went wrong' }, { status: 500 })
   }
 }
