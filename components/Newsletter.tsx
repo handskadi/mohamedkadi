@@ -15,12 +15,25 @@ const Newsletter = () => {
       return;
     }
 
-    // ✅ Simulate an API call or integrate with a real backend service
-    setTimeout(() => {
-      setMessage("Thank you for subscribing! You’ll receive updates soon.");
-      setEmail("");
-    }, 1000);
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await res.json();
+      setMessage(data.message || "Subscribed!");
+      if (data.success) setEmail('');
+    } catch (err) {
+      console.error('Subscription error:', err);
+      setMessage("Something went wrong. Try again later.");
+    }
   };
+
+
 
   return (
     <section className="bg-[#F7F7F7] dark:bg-gray-900 py-16 px-6">
