@@ -12,6 +12,7 @@ import Portfolio from "../components/Portfolio";
 import Contact from "../components/Contact";
 import AboutMe from "../components/AboutMe ";
 import FloatingButton from "../components/FloatingButton";
+
 export default function Home() {
   return (
     <>

@@ -1,5 +1,3 @@
-"use client";
-
 import { FaCode, FaLaptopCode, FaLock, FaRocket, FaCloud, FaUsers } from "react-icons/fa";
 
 const features = [

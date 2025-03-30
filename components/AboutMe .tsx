@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { Typewriter } from "react-simple-typewriter";
 
@@ -25,24 +23,24 @@ const AboutMe = () => {
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mt-4">
             I’m <span className="text-zinc-500"><Typewriter
-            words={[
-              "Mohamed ",
-              "KADI",
-            ]} 
-            loop={true}
-            cursor
-            cursorStyle="|"
-            typeSpeed={70}
-            deleteSpeed={50}/></span>, a Passionate Full Stack Developer 
-            
+              words={[
+                "Mohamed ",
+                "KADI",
+              ]}
+              loop={true}
+              cursor
+              cursorStyle="|"
+              typeSpeed={70}
+              deleteSpeed={50} /></span>, a Passionate Full Stack Developer
+
           </h2>
           <p className="mt-4 text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
             With extensive experience in **React, Next.js, Node.js, and DevOps**, I help businesses build
-            modern, scalable, and high-performing web applications. My expertise spans from **UI/UX design** 
+            modern, scalable, and high-performing web applications. My expertise spans from **UI/UX design**
             to complex **backend architecture** and **API development**.
           </p>
           <p className="mt-4 text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
-            I am committed to delivering **fast, secure, and SEO-friendly** digital solutions that enhance 
+            I am committed to delivering **fast, secure, and SEO-friendly** digital solutions that enhance
             business success and user engagement.
           </p>
 

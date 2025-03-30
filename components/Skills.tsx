@@ -1,5 +1,3 @@
-"use client";
-
 import { FaReact, FaNodeJs, FaWordpress, FaPython, FaDatabase, FaCss3Alt } from "react-icons/fa";
 
 interface SkillsProps {

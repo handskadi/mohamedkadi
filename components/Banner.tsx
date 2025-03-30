@@ -1,5 +1,3 @@
-"use client";
-
 const Banner = () => {
   return (
     <div className="bg-gradient-to-r from-blue-700 to-[#B06AB3] px-6 py-12">

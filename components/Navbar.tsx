@@ -63,14 +63,14 @@ export default function Navbar() {
         <div className="hidden md:flex flex-grow justify-center">
           <ul className="flex space-x-6">
             {[
-              { name: "Home", href: "#hero" },
+              { name: "Home", href: "/" },
               { name: "About", href: "#about" },
               { name: "Features", href: "#features" },
               { name: "Portfolio", href: "#portfolio" },
               { name: "Testimonials", href: "#testimonials" },
               { name: "Skills", href: "#skills" },
               { name: "FAQ", href: "#faq" },
-              { name: "Blog", href: "#blog" },
+              { name: "Blog", href: "/blog" },
               { name: "Contact", href: "#contact" },
             ].map((item, index) => (
               <li key={index}>
@@ -106,14 +106,14 @@ export default function Navbar() {
         <div className="md:hidden bg-background transition-all absolute top-[64px] w-full shadow-lg">
           <ul className="space-y-2 p-4">
             {[
-              { name: "Home", href: "#hero" },
+              { name: "Home", href: "/hero" },
               { name: "About", href: "#about" },
               { name: "Features", href: "#features" },
               { name: "Portfolio", href: "#portfolio" },
               { name: "Testimonials", href: "#testimonials" },
               { name: "Skills", href: "#skills" },
               { name: "FAQ", href: "#faq" },
-              { name: "Blog", href: "#blog" },
+              { name: "Blog", href: "/blog" },
               { name: "Contact", href: "#contact" },
             ].map((item, index) => (
               <li key={index}>
