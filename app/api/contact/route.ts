@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs/promises'
 
 
 export async function POST(req: Request) {
   const { name, email, phone, message } = await req.json()
-  const autoReplyTemplate = fs.readFileSync('./templates/autoReplyToSender.html', 'utf8');
+  const autoReplyTemplate = path.join(process.cwd(), 'app/api/contact/templates/autoReplyToSender.html');
+  let html = await fs.readFile(autoReplyTemplate, 'utf-8');
 
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -37,7 +39,8 @@ export async function POST(req: Request) {
     to: email,
     replyTo: process.env.EMAIL_USER, // <-- your contact@ for replies
     subject: '✅ Thank you for contacting Mohamed KADI',
-    html: autoReplyTemplate.replace(/{{name}}/g, name),
+    html: html
+      .replace(/{{name}}/g, name),
     // html: `
     //   <p>Hi ${name},</p>
     //   <p>Thanks for reaching out! Your message has been received and I’ll get back to you as soon as possible.</p>
