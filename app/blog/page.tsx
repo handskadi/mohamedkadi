@@ -13,8 +13,9 @@ export default function BlogPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {blogPosts.map((post) => (
                     <Link href={`/blog/${post.slug}`} key={post.slug}>
-                        <div className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow hover:shadow-lg transition duration-300 bg-white dark:bg-gray-900">
-                            <div className="relative h-52">
+                        <div className="flex flex-col h-full rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow hover:shadow-lg transition duration-300 bg-white dark:bg-gray-900">
+                            {/* Image */}
+                            <div className="relative h-52 w-full">
                                 <Image
                                     src={post.featuredImage}
                                     alt={post.title}
@@ -22,19 +23,24 @@ export default function BlogPage() {
                                     className="object-cover w-full h-full"
                                 />
                             </div>
-                            <div className="p-5">
+
+                            {/* Body */}
+                            <div className="flex flex-col flex-grow p-5">
                                 <p className="text-sm text-blue-600 dark:text-blue-400 font-medium uppercase">{post.category}</p>
                                 <h2 className="text-xl font-semibold mt-2 mb-2 text-gray-900 dark:text-white">
                                     {post.title}
                                 </h2>
-                                <p className="text-gray-600 dark:text-gray-400 mb-4">{post.description}</p>
-                                <div className="text-sm text-gray-500 dark:text-gray-400 flex justify-between items-center">
+                                <p className="text-gray-600 dark:text-gray-400 mb-4 flex-grow">{post.description}</p>
+
+                                {/* Footer */}
+                                <div className="text-sm text-gray-500 dark:text-gray-400 flex justify-between items-center mt-auto pt-2 border-t border-gray-100 dark:border-gray-700">
                                     <span>By {post.author.name}</span>
                                     <span>{post.date}</span>
                                 </div>
                             </div>
                         </div>
                     </Link>
+
                 ))}
             </div>
         </div>

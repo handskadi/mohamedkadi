@@ -1,5 +1,6 @@
 const blogPosts = [
     {
+        id: 1,
         slug: "why-every-business-needs-a-website-2024",
         title: "Why Every Business Needs a Website in 2024",
         featuredImage: '/project1.webp',
@@ -47,6 +48,104 @@ const blogPosts = [
 
                 <p className="mt-10 font-semibold text-gray-800 dark:text-gray-200">
                     The bottom line? A website isn’t a luxury — it’s a necessity. Whether you're a local service provider or a growing startup, a strong online presence is your foundation for long-term success.
+                </p>
+            </>
+        ),
+    },
+    {
+        id: 2,
+        slug: "power-of-full-stack-development",
+        title: "The Power of Full Stack Development for Business Success",
+        featuredImage: '/project2.webp',
+        featured: true,
+        author: {
+            name: 'M. KADI',
+            role: 'Web Developer & Founder',
+            image: '/mohamedkadi.jpg',
+            bio: 'Passionate about full stack web solutions tailored for modern businesses.',
+        },
+        date: 'Apr 3, 2025',
+        category: "Full Stack Development",
+        description: 'Discover how full stack development streamlines workflows and maximizes ROI.',
+        content: (
+            <>
+                <h2 className="text-2xl font-semibold mb-4">1. End-to-End Control</h2>
+                <p className="mb-6">
+                    Full stack developers manage both frontend and backend systems, allowing for faster execution, greater consistency, and reduced communication overhead.
+                </p>
+                <h2 className="text-2xl font-semibold mb-4">2. Cost Efficiency</h2>
+                <p className="mb-6">
+                    Hiring one developer who can build both server and client saves cost and ensures seamless integration across the stack.
+                </p>
+                <h2 className="text-2xl font-semibold mb-4">3. Rapid Prototyping</h2>
+                <p className="mb-6">
+                    Full stack allows for fast MVP development to test product ideas and pivot quickly.
+                </p>
+            </>
+        ),
+    },
+
+    {
+        id: 3,
+        slug: "modern-web-tech-innovation",
+        title: "How Modern Web Technologies Drive Innovation",
+        featuredImage: '/project3.webp',
+        featured: false,
+        author: {
+            name: 'M. KADI',
+            role: 'Web Developer & Founder',
+            image: '/mohamedkadi.jpg',
+            bio: 'Exploring new tools and frameworks that push digital possibilities.',
+        },
+        date: 'Apr 10, 2025',
+        category: "Technology & Trends",
+        description: 'From React to AI, discover the tools shaping the future of digital products.',
+        content: (
+            <>
+                <h2 className="text-2xl font-semibold mb-4">1. React & Next.js</h2>
+                <p className="mb-6">
+                    React and Next.js continue to push boundaries in building fast, scalable, and user-friendly apps.
+                </p>
+                <h2 className="text-2xl font-semibold mb-4">2. Cloud Services</h2>
+                <p className="mb-6">
+                    Platforms like Vercel, Netlify, and AWS empower developers to deploy and scale effortlessly.
+                </p>
+                <h2 className="text-2xl font-semibold mb-4">3. AI-Driven UX</h2>
+                <p className="mb-6">
+                    AI is reshaping how interfaces respond to user behavior, boosting personalization and engagement.
+                </p>
+            </>
+        ),
+    },
+
+    {
+        id: 4,
+        slug: "seo-best-practices-2025",
+        title: "Top SEO Best Practices for 2025",
+        featuredImage: '/project4.webp',
+        featured: true,
+        author: {
+            name: 'M. KADI',
+            role: 'Web Developer & Founder',
+            image: '/mohamedkadi.jpg',
+            bio: 'Helping brands grow online with effective SEO and strategy.',
+        },
+        date: 'Apr 17, 2025',
+        category: "SEO & Marketing",
+        description: 'Keep your website optimized for 2025 with the latest SEO techniques.',
+        content: (
+            <>
+                <h2 className="text-2xl font-semibold mb-4">1. Core Web Vitals</h2>
+                <p className="mb-6">
+                    Page speed, interactivity, and visual stability remain crucial ranking factors.
+                </p>
+                <h2 className="text-2xl font-semibold mb-4">2. Search Intent Focus</h2>
+                <p className="mb-6">
+                    Align content with what users actually want when searching—Google rewards relevance.
+                </p>
+                <h2 className="text-2xl font-semibold mb-4">3. AI-Friendly Content</h2>
+                <p className="mb-6">
+                    Write naturally, answer user questions clearly, and structure content semantically for better indexing.
                 </p>
             </>
         ),
