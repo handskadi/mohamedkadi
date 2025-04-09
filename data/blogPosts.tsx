@@ -252,7 +252,6 @@ query {
 
         ),
     },
-
     {
         id: 4,
         slug: "seo-best-practices-2025",
@@ -306,20 +305,20 @@ query {
                 <pre className="bg-gray-900 text-white text-sm p-4 rounded-lg mb-6 overflow-x-auto">
                     <code className="whitespace-pre">
                         {`<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "SEO Best Practices for 2024",
-  "author": {
-    "@type": "Person",
-    "name": "M. KADI"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "MohamedKadi.com"
-  }
-}
-</script>`}
+                            {
+                            "@context": "https://schema.org",
+                            "@type": "Article",
+                            "headline": "SEO Best Practices for 2024",
+                            "author": {
+                                "@type": "Person",
+                                "name": "M. KADI"
+                            },
+                            "publisher": {
+                                "@type": "Organization",
+                                "name": "MohamedKadi.com"
+                            }
+                            }
+                            </script>`}
                     </code>
                 </pre>
 
@@ -351,9 +350,9 @@ query {
                 <pre className="bg-gray-900 text-white text-sm p-4 rounded-lg mb-6 overflow-x-auto">
                     <code className="whitespace-pre">
                         {`/seo-guide
-/seo-guide/on-page-optimization
-/seo-guide/link-building
-/seo-guide/technical-seo`}
+                            /seo-guide/on-page-optimization
+                            /seo-guide/link-building
+                            /seo-guide/technical-seo`}
                     </code>
                 </pre>
 
@@ -396,6 +395,215 @@ query {
 
         ),
     },
+    {
+        id: 5,
+        slug: "nextjs-supabase-auth-2025",
+        title: "Setting up Next.js Auth with Supabase — the correct way in Next.js 13+ (2025)",
+        featuredImage: "/project5.webp",
+        featured: false,
+        date: "Apr 8, 2025",
+        category: "Authentication",
+        author: {
+            name: "M. KADI",
+            role: "Full Stack Developer",
+            image: "/mohamedkadi.jpg",
+            bio: "Helping businesses build secure, scalable, and modern web applications with the latest tools in the Next.js ecosystem.",
+        },
+        description:
+            "A step-by-step guide for implementing server-side authentication in modern Next.js (App Router) using Supabase in 2025.",
+        content: (
+            <>
+                <p className="mb-6">
+                    Supabase has become one of the most powerful open-source Firebase alternatives. Paired with
+                    Next.js 13+ App Router, it provides a clean and modern way to manage authentication, especially
+                    when you're building server-first applications. In this guide, you'll learn how to set up
+                    authentication using Supabase the right way — with SSR, protected routes, middleware, and a
+                    complete login/signup flow in a production-grade Next.js project.
+                </p>
+
+                <h2 className="text-2xl font-semibold mb-4">1. Install Supabase Packages</h2>
+                <p className="mb-6">
+                    First, install the required Supabase libraries. The core library
+                    <code className="text-blue-600 dark:text-blue-400 bg-gray-100 px-1 py-0.5 rounded"> @supabase/supabase-js </code>
+                    is your connection to the Supabase API, while
+                    <code className="text-blue-600 dark:text-blue-400 bg-gray-100 px-1 py-0.5 rounded"> @supabase/ssr </code>
+                    helps with server-side handling in the App Router.
+                </p>
+                <pre className="bg-gray-800 text-white rounded-lg p-4 text-sm mb-6 overflow-x-auto">
+                    <code>
+                        {`npm install @supabase/supabase-js @supabase/ssr`}
+                    </code>
+                </pre>
+
+                <h2 className="text-2xl font-semibold mb-4">2. Set Up Environment Variables</h2>
+                <p className="mb-6">
+                    Create a <code className="bg-gray-100 px-1 py-0.5 rounded">.env.local</code> file at the root of
+                    your project and add the following environment variables. These values come from your Supabase
+                    project's settings dashboard. Be sure to never expose your service role key to the browser.
+                </p>
+                <pre className="bg-gray-800 text-white rounded-lg p-4 text-sm mb-6 overflow-x-auto">
+                    <code>
+                        {`NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key`}
+                    </code>
+                </pre>
+
+                <h2 className="text-2xl font-semibold mb-4">3. Create Supabase Utility Clients</h2>
+                <p className="mb-6">
+                    In a Next.js 13 App Router project, it's essential to create two utility clients: one for the
+                    server and one for the client. These allow you to seamlessly call Supabase from wherever needed
+                    without rewriting the logic. This is especially important for authenticated routes.
+                </p>
+
+                <h3 className="text-xl font-medium mb-2">utils/supabase/server.ts</h3>
+                <pre className="bg-gray-800 text-white rounded-lg p-4 text-sm mb-6 overflow-x-auto">
+                    <code>
+                        {`import { createServerClient } from '@supabase/ssr'
+          import { cookies } from 'next/headers'
+          
+          export const createClient = () => {
+            return createServerClient(
+              process.env.NEXT_PUBLIC_SUPABASE_URL!,
+              process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+              { cookies }
+            )
+          }`}
+                    </code>
+                </pre>
+
+                <h3 className="text-xl font-medium mb-2">utils/supabase/client.ts</h3>
+                <pre className="bg-gray-800 text-white rounded-lg p-4 text-sm mb-6 overflow-x-auto">
+                    <code>
+                        {`import { createBrowserClient } from '@supabase/ssr'
+          
+          export const createClient = () => {
+            return createBrowserClient(
+              process.env.NEXT_PUBLIC_SUPABASE_URL!,
+              process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+            )
+          }`}
+                    </code>
+                </pre>
+
+                <h2 className="text-2xl font-semibold mb-4">4. Middleware to Refresh Sessions</h2>
+                <p className="mb-6">
+                    Since the server cannot refresh tokens (because cookies can't be mutated in Server Components),
+                    you’ll need middleware to ensure that session tokens remain fresh. Supabase provides a helper
+                    to do this automatically.
+                </p>
+                <pre className="bg-gray-800 text-white rounded-lg p-4 text-sm mb-6 overflow-x-auto">
+                    <code>
+                        {`// middleware.ts
+          import { type NextRequest } from 'next/server'
+          import { updateSession } from '@/utils/supabase/middleware'
+          
+          export async function middleware(request: NextRequest) {
+            return await updateSession(request)
+          }
+          
+          export const config = {
+            matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+          }`}
+                    </code>
+                </pre>
+
+                <h2 className="text-2xl font-semibold mb-4">5. Build Login & Signup Forms</h2>
+                <p className="mb-6">
+                    Create login and signup forms using Supabase actions inside route handlers. Be mindful to use
+                    server-side actions and not directly expose Supabase logic to the client unless necessary.
+                </p>
+                <h3 className="text-xl font-medium mb-2">app/login/actions.ts</h3>
+                <pre className="bg-gray-800 text-white rounded-lg p-4 text-sm mb-6 overflow-x-auto">
+                    <code>
+                        {`'use server'
+          import { createClient } from '@/utils/supabase/server'
+          
+          export async function login(formData: FormData) {
+            const supabase = createClient()
+            const email = formData.get('email') as string
+            const password = formData.get('password') as string
+          
+            const { error } = await supabase.auth.signInWithPassword({
+              email,
+              password
+            })
+          
+            if (error) throw new Error(error.message)
+          }`}
+                    </code>
+                </pre>
+
+                <h2 className="text-2xl font-semibold mb-4">6. Protect Private Routes</h2>
+                <p className="mb-6">
+                    One of the key benefits of SSR in Next.js 13 is that you can conditionally render pages server-side
+                    based on authentication. Here’s an example that ensures a route is only accessible to logged-in users.
+                </p>
+                <h3 className="text-xl font-medium mb-2">app/dashboard/page.tsx</h3>
+                <pre className="bg-gray-800 text-white rounded-lg p-4 text-sm mb-6 overflow-x-auto">
+                    <code>
+                        {`import { redirect } from 'next/navigation'
+          import { createClient } from '@/utils/supabase/server'
+          
+          export default async function DashboardPage() {
+            const supabase = createClient()
+            const { data: { user } } = await supabase.auth.getUser()
+          
+            if (!user) {
+              redirect('/login')
+            }
+          
+            return <p className="text-xl">Welcome, {user.email}</p>
+          }`}
+                    </code>
+                </pre>
+
+                <h2 className="text-2xl font-semibold mb-4">7. Confirm Signups via Route Handler</h2>
+                <p className="mb-6">
+                    When email confirmation is turned on (default in Supabase), new users must confirm their email
+                    address. Supabase sends a confirmation link, and your app should have a route ready to receive
+                    that token and complete the login.
+                </p>
+                <h3 className="text-xl font-medium mb-2">app/auth/confirm/route.ts</h3>
+                <pre className="bg-gray-800 text-white rounded-lg p-4 text-sm mb-6 overflow-x-auto">
+                    <code>
+                        {`import { createClient } from '@/utils/supabase/server'
+          import { redirect } from 'next/navigation'
+          
+          export async function GET(request: Request) {
+            const { searchParams } = new URL(request.url)
+            const token = searchParams.get('token_hash')
+            const type = searchParams.get('type')
+          
+            const supabase = createClient()
+            const { error } = await supabase.auth.verifyOtp({
+              token_hash: token!,
+              type: type as any,
+            })
+          
+            if (!error) {
+              redirect('/dashboard')
+            }
+          
+            redirect('/error')
+          }`}
+                    </code>
+                </pre>
+
+                <h2 className="text-2xl font-semibold mb-4">Conclusion</h2>
+                <p className="mb-6">
+                    Supabase + Next.js 13 App Router is a powerful combination that allows you to build secure,
+                    server-rendered apps with rich user authentication, fully managed sessions, and cookie-based
+                    access control — all without the need for external libraries. By following the patterns in this
+                    guide, your setup will scale gracefully, stay secure, and integrate cleanly into your SSR
+                    Next.js workflow.
+                </p>
+                <p className="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-6">
+                    Now that you've learned how to do it the right way — go build something great.
+                </p>
+            </>
+
+        ),
+    }
 ];
 
 
