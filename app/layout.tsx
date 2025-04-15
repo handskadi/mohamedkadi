@@ -58,7 +58,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* ✅ Google Tag Manager Script (in <head>) */}
-        <Script id="gtm-init" strategy="afterInteractive">
+        {/* <Script id="gtm-init" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -66,7 +66,7 @@ export default function RootLayout({
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-54SPGC3S');
           `}
-        </Script>
+        </Script> */}
       </head>
       <body className="dark:bg-gray-900 transition-colors">
         {/* ✅ Google Tag Manager (noscript) for <body> fallback */}
@@ -84,7 +84,7 @@ export default function RootLayout({
         <main className="container mx-auto mt-8">{children}</main>
         <Footer />
         {/* ✅ Schema.org JSON-LD for Full Stack Developer */}
-        <Script
+        {/* <Script
           id="structured-data"
           type="application/ld+json"
           strategy="afterInteractive"
@@ -118,7 +118,7 @@ export default function RootLayout({
               ]
             }),
           }}
-        />
+        /> */}
       </body>
     </html>
   );
