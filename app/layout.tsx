@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Script from "next/script"; 
+import Script from "next/script";
 import "./globals.css";
 
 
@@ -13,15 +13,15 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Mohamed KADI",
-      url: "https://mohamedkadi.com", 
+      url: "https://mohamedkadi.com",
     }
   ],
   keywords: "Full Stack Developer, MERN, React, Next.js, WordPress, Flask, Python, Web Development, Custom Themes, Plugins",
   alternates: {
-    canonical: "https://mohamedkadi.com/", 
+    canonical: "https://mohamedkadi.com/",
   },
-   
-   openGraph: {
+
+  openGraph: {
     title: "Mohamed KADI | Full Stack Developer | MERN, Next.js, WordPress",
     description:
       "Full Stack Developer specializing in React, Next.js, MERN, WordPress, and Python Flask. Expert in web development and scalable applications.",
@@ -56,12 +56,35 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <body className="dark:bg-gray-900 transition-colors">
-      <Navbar />
-      <main className="container mx-auto mt-8">{children}</main>
-      <Footer />
-      {/* ✅ Schema.org JSON-LD for Full Stack Developer */}
-      <Script
+      <head>
+        {/* ✅ Google Tag Manager Script (in <head>) */}
+        <Script id="gtm-init" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-54SPGC3S');
+          `}
+        </Script>
+      </head>
+      <body className="dark:bg-gray-900 transition-colors">
+        {/* ✅ Google Tag Manager (noscript) for <body> fallback */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-54SPGC3S"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+
+
+        <Navbar />
+        <main className="container mx-auto mt-8">{children}</main>
+        <Footer />
+        {/* ✅ Schema.org JSON-LD for Full Stack Developer */}
+        <Script
           id="structured-data"
           type="application/ld+json"
           strategy="afterInteractive"
@@ -96,7 +119,7 @@ export default function RootLayout({
             }),
           }}
         />
-    </body>
-  </html>
+      </body>
+    </html>
   );
 }
