@@ -66,6 +66,7 @@ export default function Navbar() {
       submenu: true,
       items: [
         { name: "Image Compressor", href: "/tools/image-compressor" },
+        { name: "Image Compressor", href: "/tools/image-compressor" },
       ],
     },
     { name: "Contact", href: "/#contact" },
@@ -115,7 +116,8 @@ export default function Navbar() {
                         <li key={subitem.href}>
                           <Link
                             href={subitem.href}
-                            className="block px-4 py-2 text-sm text-foreground hover:bg-background"
+                            className="block px-4 py-3 text-base text-foreground hover:bg-background border-b border-gray-200"
+
                           >
                             {subitem.name}
                           </Link>
