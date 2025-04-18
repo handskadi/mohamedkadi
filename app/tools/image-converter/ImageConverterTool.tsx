@@ -3,7 +3,9 @@
 import { useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import ReactCompareImage from 'react-compare-image';
-import { CloudUpload, Download, Trash2, Eye } from 'lucide-react';
+import { CloudUpload, Download, Trash2, Eye, Package } from 'lucide-react';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 type CompressionLevel = 'low' | 'medium' | 'high';
 
@@ -22,6 +24,7 @@ export default function ImageConverterTool() {
     const [images, setImages] = useState<ImageItem[]>([]);
     const [globalCompressionLevel, setGlobalCompressionLevel] = useState<CompressionLevel>('medium');
     const [resizeEnabled, setResizeEnabled] = useState(false);
+    const [processingUploads, setProcessingUploads] = useState(false);
 
     const getMappedQuality = (percent: number, level: CompressionLevel) => {
         const p = 1 - percent / 100;
@@ -74,6 +77,8 @@ export default function ImageConverterTool() {
         const files = Array.from(e.target.files || []).slice(0, 5);
         const newImages: ImageItem[] = [];
 
+        setProcessingUploads(true);
+
         for (const file of files) {
             const dataURL = await imageCompression.getDataUrlFromFile(file);
             const originalImg = new Image();
@@ -97,6 +102,7 @@ export default function ImageConverterTool() {
         }
 
         setImages((prev) => [...prev, ...newImages]);
+        setProcessingUploads(false);
     };
 
     const updateQuality = async (id: string, percent: number) => {
@@ -156,14 +162,34 @@ export default function ImageConverterTool() {
     const downloadWebP = (file: File) => {
         const url = URL.createObjectURL(file);
         const a = document.createElement('a');
+        const originalName = file.name.replace(/\.[^/.]+$/, '');
+        a.download = `${originalName}-optimized-by-mohamedkadi.com.webp`;
         a.href = url;
-        a.download = 'compressed.webp';
         a.click();
         URL.revokeObjectURL(url);
     };
 
+
+    const downloadAllAsZip = async () => {
+        const zip = new JSZip();
+
+        for (const img of images) {
+            const originalName = img.originalFile.name.replace(/\.[^/.]+$/, '');
+            const newName = `${originalName}-optimized-by-mohamedkadi.com.webp`;
+            zip.file(newName, img.compressedFile);
+        }
+
+        const now = new Date();
+        const timestamp = now.toISOString().replace(/[:T]/g, '-').slice(0, 16);
+        const zipName = `compressed-images-by-mohamedkadi.com-${timestamp}.zip`;
+
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+        saveAs(zipBlob, zipName);
+    };
+
     return (
         <div className="max-w-4xl mx-auto px-4 pb-[100px]">
+            {/* Upload UI */}
             <label className="cursor-pointer block mx-auto mb-6">
                 <div className="border-2 border-dashed border-gray-300 p-10 rounded-xl bg-gray-50 hover:border-blue-500 transition text-center">
                     <CloudUpload className="w-12 h-12 text-blue-500 mx-auto mb-2" />
@@ -173,6 +199,17 @@ export default function ImageConverterTool() {
                 <input multiple type="file" accept="image/png,image/jpeg" onChange={handleUpload} className="hidden" />
             </label>
 
+            {/* Upload spinner */}
+            {processingUploads && (
+                <div className="flex justify-center mb-6 text-blue-600 text-sm items-center gap-2">
+                    <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    </svg>
+                    Processing images...
+                </div>
+            )}
+
+            {/* Compression level controls */}
             <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
                 <div className="flex gap-2">
                     {(['low', 'medium', 'high'] as CompressionLevel[]).map((level) => (
@@ -194,6 +231,7 @@ export default function ImageConverterTool() {
                 </div>
             </div>
 
+            {/* Image list */}
             {images.map((img) => {
                 const fileType = img.originalFile.name.split('.').pop()?.toUpperCase();
 
@@ -231,6 +269,7 @@ export default function ImageConverterTool() {
                             </div>
                         </div>
 
+                        {/* Quality slider */}
                         <div className="mt-4 text-center">
                             <label className="text-gray-700 text-sm">Adjust quality (0 = high, 100 = low):</label>
                             <input
@@ -270,6 +309,19 @@ export default function ImageConverterTool() {
                     </div>
                 );
             })}
+
+            {/* Download All ZIP button (2+ images only) */}
+            {images.length >= 2 && (
+                <div className="flex justify-center mt-10">
+                    <button
+                        onClick={downloadAllAsZip}
+                        className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg text-sm font-medium"
+                    >
+                        <Package className="w-4 h-4" />
+                        Download All as ZIP
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
