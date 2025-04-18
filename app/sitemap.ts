@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools",
     "/tools/image-compressor",
     "/contact",
+    "/ⵎⴰⴷ-ⴳⵉⵖ",
   ];
 
   const blogRoutes = blogPosts.map((post) => `/blog/${post.slug}`);

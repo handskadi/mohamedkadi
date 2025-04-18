@@ -66,7 +66,7 @@ export default function Navbar() {
       submenu: true,
       items: [
         { name: "Image Compressor", href: "/tools/image-compressor" },
-        { name: "Image Compressor", href: "/tools/image-compressor" },
+        // { name: "Image Compressor", href: "/tools/image-compressor" },
       ],
     },
     { name: "Contact", href: "/#contact" },
