@@ -6,6 +6,21 @@ import Link from "next/link";
 import { FiMenu, FiX, FiMoon, FiSun } from "react-icons/fi";
 import Image from "next/image";
 
+
+type NavLink =
+  | {
+    name: string;
+    href: string;
+    submenu?: false;
+  }
+  | {
+    name: string;
+    submenu: true;
+    items: { name: string; href: string }[];
+  };
+
+
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -42,7 +57,7 @@ export default function Navbar() {
     }
   };
 
-  const links = [
+  const links: NavLink[] = [
     { name: "Home", href: "/" },
     { name: "Portfolio", href: "/portfolio" },
     { name: "Blog", href: "/blog" },
@@ -55,6 +70,7 @@ export default function Navbar() {
     },
     { name: "Contact", href: "/#contact" },
   ];
+
 
   return (
     <nav className="w-full fixed top-0 left-0 z-50 shadow-md bg-background transition-colors">
@@ -112,7 +128,7 @@ export default function Navbar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    onClick={(e) => scrollIfOnHome(e, item.href.replace("/", ""))}
+                    onClick={(e) => scrollIfOnHome(e, item.href!.replace("/", ""))}
                     className="text-foreground hover:text-blue-500 transition-colors"
                   >
                     {item.name}
@@ -184,7 +200,7 @@ export default function Navbar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    onClick={(e) => scrollIfOnHome(e, item.href.replace("/", ""))}
+                    onClick={(e) => scrollIfOnHome(e, item.href!.replace("/", ""))}
                     className="block text-foreground hover:text-blue-500"
                   >
                     {item.name}
