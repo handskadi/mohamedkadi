@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import imageCompression from 'browser-image-compression';
 import ReactCompareImage from 'react-compare-image';
 import { CloudUpload, Download, Trash2, Eye, Package } from 'lucide-react';
@@ -19,6 +19,14 @@ interface ImageItem {
     qualityOverride: number;
     isUpdating: boolean;
 }
+
+type CompressionOptions = {
+    fileType?: string;
+    initialQuality?: number;
+    useWebWorker?: boolean;
+    maxSizeMB?: number;
+    maxWidthOrHeight?: number;
+};
 
 export default function ImageConverterTool() {
     const [images, setImages] = useState<ImageItem[]>([]);
@@ -48,7 +56,7 @@ export default function ImageConverterTool() {
         qualityPercent: number,
         level: CompressionLevel
     ): Promise<{ file: File; dimensions: { width: number; height: number } }> => {
-        const options: imageCompression.Options = {
+        const options: CompressionOptions = {
             fileType: 'image/webp',
             initialQuality: getMappedQuality(qualityPercent, level),
             useWebWorker: true,
@@ -186,6 +194,37 @@ export default function ImageConverterTool() {
         const zipBlob = await zip.generateAsync({ type: 'blob' });
         saveAs(zipBlob, zipName);
     };
+
+    useEffect(() => {
+        const reCompressAll = async () => {
+            setImages((prev) =>
+                prev.map((img) => ({ ...img, isUpdating: true }))
+            );
+
+            const updatedImages = await Promise.all(
+                images.map(async (img) => {
+                    const { file: newCompressed, dimensions } = await compressImage(
+                        img.originalFile,
+                        img.qualityOverride,
+                        globalCompressionLevel
+                    );
+
+                    return {
+                        ...img,
+                        compressedFile: newCompressed,
+                        compressedDimensions: dimensions,
+                        isUpdating: false,
+                    };
+                })
+            );
+
+            setImages(updatedImages);
+        };
+
+        if (images.length > 0) {
+            reCompressAll();
+        }
+    }, [globalCompressionLevel]);
 
     return (
         <div className="max-w-4xl mx-auto px-4 pb-[100px]">
