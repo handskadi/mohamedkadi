@@ -18,18 +18,18 @@ export default function Footer() {
         <nav className="mt-6 md:mt-0">
           <ul className="flex flex-wrap justify-center md:justify-start gap-4 text-sm">
             <li>
-              <Link href="#home" className="hover:text-blue-500 transition-colors">
+              <Link href="/" className="hover:text-blue-500 transition-colors">
                 Home
               </Link>
             </li>
             <li>
-              <Link href="#about" className="hover:text-blue-500 transition-colors">
-                About
+              <Link href="/blog" className="hover:text-blue-500 transition-colors">
+                Blog
               </Link>
             </li>
             <li>
-              <Link href="#portfolio" className="hover:text-blue-500 transition-colors">
-                Projects
+              <Link href="/tools/image-compressor" className="hover:text-blue-500 transition-colors">
+                Tools
               </Link>
             </li>
             <li>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { FiMenu, FiX, FiMoon, FiSun } from "react-icons/fi";
@@ -9,7 +9,9 @@ import Image from "next/image";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [submenuOpen, setSubmenuOpen] = useState(false);
   const pathname = usePathname();
+  let closeTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
@@ -42,13 +44,15 @@ export default function Navbar() {
 
   const links = [
     { name: "Home", href: "/" },
-    { name: "About", href: "/#about" },
-    { name: "Features", href: "/#features" },
     { name: "Portfolio", href: "/portfolio" },
-    { name: "Testimonials", href: "/#testimonials" },
-    { name: "Skills", href: "/#skills" },
-    { name: "FAQ", href: "/#faq" },
     { name: "Blog", href: "/blog" },
+    {
+      name: "Tools",
+      submenu: true,
+      items: [
+        { name: "Image Compressor", href: "/tools/image-compressor" },
+      ],
+    },
     { name: "Contact", href: "/#contact" },
   ];
 
@@ -59,26 +63,72 @@ export default function Navbar() {
           <Image src="/logo-dark.png" alt="MK Web Logo" width={149} height={58} />
         </Link>
 
+        {/* Desktop Nav */}
         <div className="hidden md:flex flex-grow justify-center">
-          <ul className="flex space-x-6">
-            {links.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={(e) => scrollIfOnHome(e, item.href.replace("/", ""))}
-                  className="text-foreground hover:text-blue-500 transition-colors"
+          <ul className="flex space-x-6 items-center">
+            {links.map((item) =>
+              item.submenu ? (
+                <li
+                  key={item.name}
+                  className="relative"
+                  onMouseEnter={() => {
+                    if (closeTimer.current) clearTimeout(closeTimer.current);
+                    setSubmenuOpen(true);
+                  }}
+                  onMouseLeave={() => {
+                    closeTimer.current = setTimeout(() => setSubmenuOpen(false), 200);
+                  }}
                 >
-                  {item.name}
-                </Link>
-              </li>
-            ))}
+                  <button className="flex items-center gap-1 text-foreground hover:text-blue-500 transition-colors">
+                    {item.name}
+                    <svg
+                      className={`w-4 h-4 transition-transform duration-200 ${submenuOpen ? "rotate-180" : "rotate-0"
+                        }`}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {submenuOpen && (
+                    <ul className="absolute left-0 mt-2 w-52 bg-background  border border-gray-200  shadow-lg rounded opacity-100 transition-opacity duration-300 ease-in-out z-50">
+                      {item.items.map((subitem) => (
+                        <li key={subitem.href}>
+                          <Link
+                            href={subitem.href}
+                            className="block px-4 py-2 text-sm text-foreground hover:bg-background"
+                          >
+                            {subitem.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ) : (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={(e) => scrollIfOnHome(e, item.href.replace("/", ""))}
+                    className="text-foreground hover:text-blue-500 transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
         </div>
 
+        {/* Theme Toggle */}
         <button onClick={toggleDarkMode} className="hidden md:block text-xl">
           {darkMode ? <FiSun className="text-yellow-500" /> : <FiMoon />}
         </button>
 
+        {/* Hamburger Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-2xl"
@@ -88,20 +138,60 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Mobile Nav */}
       {isOpen && (
         <div className="md:hidden bg-background shadow-lg">
           <ul className="space-y-2 p-4">
-            {links.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={(e) => scrollIfOnHome(e, item.href.replace("/", ""))}
-                  className="block text-foreground hover:text-blue-500"
-                >
-                  {item.name}
-                </Link>
-              </li>
-            ))}
+            {links.map((item) =>
+              item.submenu ? (
+                <li key={item.name}>
+                  <button
+                    onClick={() => setSubmenuOpen(!submenuOpen)}
+                    className="flex justify-between w-full text-foreground hover:text-blue-500"
+                  >
+                    {item.name}
+                    <svg
+                      className={`w-4 h-4 ml-1 transition-transform duration-300 ${submenuOpen ? "rotate-180" : "rotate-0"
+                        }`}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  <ul
+                    className={`pl-4 mt-2 space-y-1 transition-all duration-300 ease-in-out overflow-hidden ${submenuOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                      }`}
+                  >
+                    {item.items.map((subitem) => (
+                      <li key={subitem.href}>
+                        <Link
+                          href={subitem.href}
+                          onClick={(e) =>
+                            scrollIfOnHome(e, subitem.href.replace("/", ""))
+                          }
+                          className="block text-foreground hover:text-blue-500"
+                        >
+                          {subitem.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ) : (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={(e) => scrollIfOnHome(e, item.href.replace("/", ""))}
+                    className="block text-foreground hover:text-blue-500"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              )
+            )}
             <li className="border-t pt-3">
               <button
                 onClick={toggleDarkMode}
