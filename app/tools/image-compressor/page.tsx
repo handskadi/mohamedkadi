@@ -1,6 +1,10 @@
 // app/tools/image-converter/page.tsx
 import ImageConverterTool from './ImageConverterTool';
 
+export const metadata = {
+    title: "Image Converter & Compressor to WebP | Mohamed Kadi Tools",
+    description: "Convert and compress PNG or JPG to WebP in your browser. Save image size, boost performance, and download optimized files instantly.",
+};
 export default function Page() {
     return (
         <div className="min-h-screen pt-[100px] pb-[100px] px-4 sm:px-8 max-w-6xl mx-auto bg-white text-gray-800">

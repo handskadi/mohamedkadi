@@ -1,7 +1,13 @@
-'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import blogPosts from '../../data/blogPosts';
+
+export const metadata = {
+    title: "Mohamed KADI Blog | Code, Tools & Tech Insights ",
+    description:
+        "Explore hands-on fullstack web development tutorials, tips, and tools. Discover coding tricks, frontend/backend techniques, and the latest dev trends.",
+};
 
 export default function BlogPage() {
     return (
