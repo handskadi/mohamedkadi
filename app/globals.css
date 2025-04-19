@@ -12,13 +12,15 @@ html {
 }
 
 /* Default Light Mode */
-body, .bg-background {
+body,
+.bg-background {
   background: var(--background-light);
   color: var(--foreground-light);
 }
 
 /* Tailwind Dark Mode Override */
-.dark body, .dark .bg-background {
+.dark body,
+.dark .bg-background {
   background: var(--background-dark);
   color: var(--foreground-dark);
 }
