@@ -6,6 +6,8 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { CloudUpload, Package } from 'lucide-react';
 import { getCroppedImg } from './utils/cropImage';
+import FaviconPreview from './FaviconPreview';
+import InstallationSection from './InstallationSection';
 
 export default function FaviconGeneratorTool() {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -155,38 +157,67 @@ export default function FaviconGeneratorTool() {
 
       {imageSrc && (
         <>
-          <div className="relative w-full aspect-square bg-black rounded-lg overflow-hidden">
-            <Cropper
-              image={imageSrc}
-              crop={crop}
-              zoom={zoom}
-              aspect={1}
-              onCropChange={setCrop}
-              onZoomChange={setZoom}
-              onCropComplete={onCropComplete}
-            />
+          <div className="flex justify-center items-center w-full min-h-[300px] px-4">
+            <div className="flex flex-col md:flex-row w-full max-w-4xl gap-6">
+
+              {/* LEFT: Canvas */}
+              <div className="flex-1 flex items-center justify-center bg-gray-100 rounded p-4">
+                <div className="relative w-full max-w-[280px] aspect-square bg-black rounded-lg overflow-hidden">
+                  <Cropper
+                    image={imageSrc}
+                    crop={crop}
+                    zoom={zoom}
+                    aspect={1}
+                    onCropChange={setCrop}
+                    onZoomChange={setZoom}
+                    onCropComplete={onCropComplete}
+                  />
+                </div>
+              </div>
+
+              {/* RIGHT: Controls */}
+              <div className="flex-1 flex items-center justify-center bg-gray-100 rounded p-4">
+                <div className="flex flex-col items-center justify-center w-full max-w-[280px] gap-6">
+                  {/* Zoom slider */}
+                  <div className="w-full">
+                    <label className="text-sm block mb-1 text-center">Zoom</label>
+                    <input
+                      type="range"
+                      min={1}
+                      max={3}
+                      step={0.1}
+                      value={zoom}
+                      onChange={(e) => setZoom(Number(e.target.value))}
+                      className="w-full cursor-pointer"
+                    />
+                  </div>
+
+                  {/* Generate button */}
+                  <button
+                    onClick={handleGenerateIcons}
+                    className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 font-medium"
+                    disabled={loading}
+                  >
+                    {loading ? 'Generating...' : 'Generate Icons'}
+                  </button>
+
+                  {/* Clear & Upload New */}
+                  <button
+                    onClick={() => {
+                      setImageSrc(null);
+                      setIcons([]);
+                      setZoom(1);
+                    }}
+                    className="w-full text-sm text-red-600 hover:underline text-center"
+                  >
+                    ✖ Clear / Upload New
+                  </button>
+                </div>
+              </div>
+
+            </div>
           </div>
 
-          <div className="mt-4">
-            <label className="text-sm">Zoom</label>
-            <input
-              type="range"
-              min={1}
-              max={3}
-              step={0.1}
-              value={zoom}
-              onChange={(e) => setZoom(Number(e.target.value))}
-              className="w-64"
-            />
-          </div>
-
-          <button
-            onClick={handleGenerateIcons}
-            className="mt-6 bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 font-medium"
-            disabled={loading}
-          >
-            {loading ? 'Generating...' : 'Generate Icons'}
-          </button>
         </>
       )}
 
@@ -205,6 +236,26 @@ export default function FaviconGeneratorTool() {
             ))}
           </div>
 
+          {icons.length > 0 && (
+            <div className="mt-10">
+
+              <FaviconPreview
+                faviconBlob={icons.find(i => i.size === 32)?.blob!}
+                mode="light"
+                projectName="Mohamed Kadi"
+                websiteURL="https://mohamedkadi.com"
+                onClear={() => {
+                  setImageSrc(null);
+                  setIcons([]);
+                  setZoom(1);
+                }}
+              />
+
+            </div>
+
+          )}
+
+
           <div className="mt-6 text-center">
             <button
               onClick={downloadAll}
@@ -214,6 +265,7 @@ export default function FaviconGeneratorTool() {
               Download All as ZIP
             </button>
           </div>
+
         </>
       )}
     </div>

@@ -19,6 +19,7 @@ export default function Page() {
 
             <FaviconGeneratorTool />
 
+
             <section className="mt-20 space-y-10 text-left">
                 <div>
                     <h2 className="text-2xl font-bold mb-2">Why Use Our Favicon Generator?</h2>
