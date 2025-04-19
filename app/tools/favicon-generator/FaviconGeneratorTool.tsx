@@ -195,7 +195,7 @@ export default function FaviconGeneratorTool() {
                   {/* Generate button */}
                   <button
                     onClick={handleGenerateIcons}
-                    className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 font-medium"
+                    className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 font-medium cursor-pointer"
                     disabled={loading}
                   >
                     {loading ? 'Generating...' : 'Generate Icons'}
@@ -208,7 +208,7 @@ export default function FaviconGeneratorTool() {
                       setIcons([]);
                       setZoom(1);
                     }}
-                    className="w-full text-sm text-red-600 hover:underline text-center"
+                    className="w-full text-sm text-red-600 hover:underline text-center cursor-pointer"
                   >
                     ✖ Clear / Upload New
                   </button>
@@ -259,13 +259,13 @@ export default function FaviconGeneratorTool() {
           <div className="mt-6 text-center">
             <button
               onClick={downloadAll}
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg text-sm font-medium"
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg text-sm font-medium cursor-pointer"
             >
               <Package className="w-4 h-4" />
               Download All as ZIP
             </button>
           </div>
-
+          <InstallationSection />
         </>
       )}
     </div>

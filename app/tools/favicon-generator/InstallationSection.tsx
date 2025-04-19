@@ -59,7 +59,7 @@ export default function InstallationComponent() {
                     </pre>
                     <button
                         onClick={handleCopy}
-                        className="absolute top-2 right-2 flex items-center gap-1 px-3 py-1 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white rounded"
+                        className="absolute top-2 right-2 flex items-center gap-1 px-3 py-1 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white rounded cursor-pointer"
                     >
                         <Copy size={14} />
                         {copied ? 'Copied' : 'Copy'}

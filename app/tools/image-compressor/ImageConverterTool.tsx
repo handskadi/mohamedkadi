@@ -331,7 +331,7 @@ export default function ImageConverterTool() {
                             onMouseUp={() => handleSliderRelease(img.id)}
                             onTouchEnd={() => handleSliderRelease(img.id)}
                             disabled={img.isUpdating}
-                            className="w-56 mx-3"
+                            className="w-56 mx-3 cursor-pointer"
                         />
                         <span className="text-xs text-gray-500">
                             → {(getMappedQuality(img.tempQuality, globalCompressionLevel) * 100).toFixed(0)}%
