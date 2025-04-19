@@ -1,3 +1,4 @@
+// Place this in app/tools/image-compressor/ImageConverterTool.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -17,16 +18,9 @@ interface ImageItem {
     compressedDimensions: { width: number; height: number };
     showCompare: boolean;
     qualityOverride: number;
+    tempQuality: number;
     isUpdating: boolean;
 }
-
-type CompressionOptions = {
-    fileType?: string;
-    initialQuality?: number;
-    useWebWorker?: boolean;
-    maxSizeMB?: number;
-    maxWidthOrHeight?: number;
-};
 
 export default function ImageConverterTool() {
     const [images, setImages] = useState<ImageItem[]>([]);
@@ -56,7 +50,7 @@ export default function ImageConverterTool() {
         qualityPercent: number,
         level: CompressionLevel
     ): Promise<{ file: File; dimensions: { width: number; height: number } }> => {
-        const options: CompressionOptions = {
+        const options = {
             fileType: 'image/webp',
             initialQuality: getMappedQuality(qualityPercent, level),
             useWebWorker: true,
@@ -105,6 +99,7 @@ export default function ImageConverterTool() {
                 compressedDimensions: dimensions,
                 showCompare: false,
                 qualityOverride: 0,
+                tempQuality: 0,
                 isUpdating: false,
             });
         }
@@ -113,34 +108,44 @@ export default function ImageConverterTool() {
         setProcessingUploads(false);
     };
 
-    const updateQuality = async (id: string, percent: number) => {
+    const updateQuality = async (id: string) => {
+        const img = images.find((i) => i.id === id);
+        if (!img) return;
+
         setImages((prev) =>
-            prev.map((img) =>
-                img.id === id ? { ...img, isUpdating: true, qualityOverride: percent } : img
+            prev.map((i) =>
+                i.id === id ? { ...i, isUpdating: true, qualityOverride: i.tempQuality } : i
             )
         );
 
-        const imgToUpdate = images.find((img) => img.id === id);
-        if (!imgToUpdate) return;
-
         const { file: newCompressed, dimensions } = await compressImage(
-            imgToUpdate.originalFile,
-            percent,
+            img.originalFile,
+            img.tempQuality,
             globalCompressionLevel
         );
 
         setImages((prev) =>
-            prev.map((img) =>
-                img.id === id
+            prev.map((i) =>
+                i.id === id
                     ? {
-                        ...img,
+                        ...i,
                         compressedFile: newCompressed,
                         compressedDimensions: dimensions,
                         isUpdating: false,
                     }
-                    : img
+                    : i
             )
         );
+    };
+
+    const handleSliderChange = (id: string, value: number) => {
+        setImages((prev) =>
+            prev.map((img) => (img.id === id ? { ...img, tempQuality: value } : img))
+        );
+    };
+
+    const handleSliderRelease = (id: string) => {
+        updateQuality(id);
     };
 
     const removeImage = (id: string) => {
@@ -177,16 +182,13 @@ export default function ImageConverterTool() {
         URL.revokeObjectURL(url);
     };
 
-
     const downloadAllAsZip = async () => {
         const zip = new JSZip();
-
         for (const img of images) {
             const originalName = img.originalFile.name.replace(/\.[^/.]+$/, '');
             const newName = `${originalName}-optimized-by-mohamedkadi.com.webp`;
             zip.file(newName, img.compressedFile);
         }
-
         const now = new Date();
         const timestamp = now.toISOString().replace(/[:T]/g, '-').slice(0, 16);
         const zipName = `compressed-images-by-mohamedkadi.com-${timestamp}.zip`;
@@ -197,18 +199,15 @@ export default function ImageConverterTool() {
 
     useEffect(() => {
         const reCompressAll = async () => {
-            setImages((prev) =>
-                prev.map((img) => ({ ...img, isUpdating: true }))
-            );
+            setImages((prev) => prev.map((img) => ({ ...img, isUpdating: true })));
 
-            const updatedImages = await Promise.all(
+            const updated = await Promise.all(
                 images.map(async (img) => {
                     const { file: newCompressed, dimensions } = await compressImage(
                         img.originalFile,
                         img.qualityOverride,
                         globalCompressionLevel
                     );
-
                     return {
                         ...img,
                         compressedFile: newCompressed,
@@ -218,12 +217,10 @@ export default function ImageConverterTool() {
                 })
             );
 
-            setImages(updatedImages);
+            setImages(updated);
         };
 
-        if (images.length > 0) {
-            reCompressAll();
-        }
+        if (images.length > 0) reCompressAll();
     }, [globalCompressionLevel]);
 
     return (
@@ -238,7 +235,6 @@ export default function ImageConverterTool() {
                 <input multiple type="file" accept="image/png,image/jpeg" onChange={handleUpload} className="hidden" />
             </label>
 
-            {/* Upload spinner */}
             {processingUploads && (
                 <div className="flex justify-center mb-6 text-blue-600 text-sm items-center gap-2">
                     <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24">
@@ -255,7 +251,7 @@ export default function ImageConverterTool() {
                         <button
                             key={level}
                             onClick={() => setGlobalCompressionLevel(level)}
-                            className={`px-4 py-2 rounded-full text-sm font-medium border ${globalCompressionLevel === level
+                            className={`px-4 py-2 cursor-pointer rounded-full text-sm font-medium border ${globalCompressionLevel === level
                                 ? 'bg-blue-600 text-white border-blue-600'
                                 : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
                                 }`}
@@ -270,91 +266,105 @@ export default function ImageConverterTool() {
                 </div>
             </div>
 
-            {/* Image list */}
-            {images.map((img) => {
-                const fileType = img.originalFile.name.split('.').pop()?.toUpperCase();
-
-                return (
-                    <div key={img.id} className="bg-white rounded-xl shadow p-4 mb-6">
-                        <div className="flex justify-between items-center">
-                            <div className="flex gap-4 items-center">
-                                <img src={URL.createObjectURL(img.originalFile)} alt="thumb" className="w-16 h-16 object-cover rounded" />
-                                <div>
-                                    <p className="text-sm font-medium">{img.originalFile.name}</p>
-                                    <p className="text-xs text-gray-500">{getSize(img.originalFile)}</p>
-                                </div>
-                                <span className="text-xs bg-orange-100 text-orange-700 font-bold px-2 py-1 rounded">
-                                    {fileType}
-                                </span>
-                            </div>
-
-                            <div className="text-right">
-                                <p className="text-sm">{getSize(img.compressedFile)}</p>
-                                <p className="text-xs font-semibold bg-green-100 text-green-700 inline-block px-2 py-1 rounded">
-                                    {getCompression(img.originalFile, img.compressedFile)}% Smaller
-                                </p>
-                            </div>
-
-                            <div className="flex gap-2 items-center">
-                                <button onClick={() => toggleCompare(img.id)} className="text-sm border border-blue-600 text-blue-600 rounded px-3 py-1 hover:bg-blue-50">
-                                    <Eye className="w-4 h-4 inline mr-1" /> Compare
-                                </button>
-                                <button onClick={() => downloadWebP(img.compressedFile)} className="text-sm bg-blue-600 text-white rounded px-3 py-1 hover:bg-blue-700">
-                                    <Download className="w-4 h-4 inline mr-1" /> Download
-                                </button>
-                                <button onClick={() => removeImage(img.id)} className="text-sm bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">
-                                    <Trash2 className="w-4 h-4" />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Quality slider */}
-                        <div className="mt-4 text-center">
-                            <label className="text-gray-700 text-sm">Adjust quality (0 = high, 100 = low):</label>
-                            <input
-                                type="range"
-                                min={0}
-                                max={100}
-                                step={1}
-                                value={img.qualityOverride}
-                                onChange={(e) => updateQuality(img.id, Number(e.target.value))}
-                                disabled={img.isUpdating}
-                                className="w-56 mx-3"
+            {/* Image cards */}
+            {images.map((img) => (
+                <div key={img.id} className="bg-white rounded-xl shadow p-4 mb-6">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0">
+                        {/* Left: Thumbnail, name, size */}
+                        <div className="flex items-center gap-4">
+                            <img
+                                src={URL.createObjectURL(img.originalFile)}
+                                alt="thumb"
+                                className="w-16 h-16 object-cover rounded"
                             />
-                            <span className="text-xs text-gray-500">
-                                → {(getMappedQuality(img.qualityOverride, globalCompressionLevel) * 100).toFixed(0)}%
+                            <div>
+                                <p className="text-sm font-medium">{img.originalFile.name}</p>
+                                <p className="text-xs text-gray-500">{getSize(img.originalFile)}</p>
+                            </div>
+                            <span className="text-xs bg-orange-100 text-orange-700 font-bold px-2 py-1 rounded hidden sm:inline">
+                                {img.originalFile.name.split('.').pop()?.toUpperCase()}
                             </span>
-                            {img.isUpdating && (
-                                <div className="mt-1 text-blue-500 text-xs flex items-center justify-center gap-1">
-                                    <svg className="animate-spin w-3 h-3" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                    </svg>
-                                    Compressing...
-                                </div>
-                            )}
                         </div>
 
-                        {img.showCompare && (
-                            <div className="mt-4">
-                                <ReactCompareImage
-                                    key={`${img.id}-${img.qualityOverride}-${img.compressedFile.size}`}
-                                    leftImage={URL.createObjectURL(img.originalFile)}
-                                    rightImage={URL.createObjectURL(img.compressedFile)}
-                                    leftImageLabel="Original"
-                                    rightImageLabel="Compressed"
-                                />
+                        {/* Center (on desktop): Compression stats */}
+                        <div className="text-right sm:text-left">
+                            <p className="text-sm">{getSize(img.compressedFile)}</p>
+                            <p className="text-xs font-semibold bg-green-100 text-green-700 inline-block px-2 py-1 rounded">
+                                {getCompression(img.originalFile, img.compressedFile)}% Smaller
+                            </p>
+                        </div>
+
+                        {/* Right: Buttons (stacked on mobile, inline on desktop) */}
+                        <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+                            <button
+                                onClick={() => toggleCompare(img.id)}
+                                className="text-sm border border-blue-600 text-blue-600 rounded px-3 py-1 hover:bg-blue-50 w-full sm:w-auto cursor-pointer"
+                            >
+                                <Eye className="w-4 h-4 inline mr-1" /> Compare
+                            </button>
+                            <button
+                                onClick={() => downloadWebP(img.compressedFile)}
+                                className="text-sm bg-blue-600 text-white rounded px-3 py-1 hover:bg-blue-700 w-full sm:w-auto cursor-pointer"
+                            >
+                                <Download className="w-4 h-4 inline mr-1 " /> Download
+                            </button>
+                            <button
+                                onClick={() => removeImage(img.id)}
+                                className="text-sm bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600 w-full sm:w-auto "
+                            >
+                                <Trash2 className="w-4 h-4 cursor-pointer" />
+                            </button>
+                        </div>
+                    </div>
+
+
+                    {/* Slider */}
+                    <div className="mt-4 text-center">
+                        <label className="text-gray-700 text-sm">Adjust quality (0 = high, 100 = low):</label>
+                        <input
+                            type="range"
+                            min={0}
+                            max={100}
+                            step={1}
+                            value={img.tempQuality}
+                            onChange={(e) => handleSliderChange(img.id, Number(e.target.value))}
+                            onMouseUp={() => handleSliderRelease(img.id)}
+                            onTouchEnd={() => handleSliderRelease(img.id)}
+                            disabled={img.isUpdating}
+                            className="w-56 mx-3"
+                        />
+                        <span className="text-xs text-gray-500">
+                            → {(getMappedQuality(img.tempQuality, globalCompressionLevel) * 100).toFixed(0)}%
+                        </span>
+                        {img.isUpdating && (
+                            <div className="mt-1 text-blue-500 text-xs flex items-center justify-center gap-1">
+                                <svg className="animate-spin w-3 h-3" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                </svg>
+                                Compressing...
                             </div>
                         )}
                     </div>
-                );
-            })}
 
-            {/* Download All ZIP button (2+ images only) */}
+                    {img.showCompare && (
+                        <div className="mt-4">
+                            <ReactCompareImage
+                                leftImage={URL.createObjectURL(img.originalFile)}
+                                rightImage={URL.createObjectURL(img.compressedFile)}
+                                leftImageLabel="Original"
+                                rightImageLabel="Compressed"
+                            />
+                        </div>
+                    )}
+                </div>
+            ))}
+
+            {/* ZIP Download All */}
             {images.length >= 2 && (
                 <div className="flex justify-center mt-10">
                     <button
                         onClick={downloadAllAsZip}
-                        className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg text-sm font-medium"
+                        className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg text-sm font-medium cursor-pointer"
                     >
                         <Package className="w-4 h-4" />
                         Download All as ZIP

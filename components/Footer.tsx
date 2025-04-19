@@ -28,7 +28,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/tools/image-compressor" className="hover:text-blue-500 transition-colors">
+              <Link href="/tools" className="hover:text-blue-500 transition-colors">
                 Tools
               </Link>
             </li>

@@ -15,6 +15,7 @@ type NavLink =
   }
   | {
     name: string;
+    href: string;
     submenu: true;
     items: { name: string; href: string }[];
   };
@@ -63,10 +64,11 @@ export default function Navbar() {
     { name: "Blog", href: "/blog" },
     {
       name: "Tools",
+      href: "/tools",
       submenu: true,
       items: [
         { name: "Image Compressor", href: "/tools/image-compressor" },
-        // { name: "Image Compressor", href: "/tools/image-compressor" },
+        { name: "Favicon Generator", href: "/tools/favicon-generator" },
       ],
     },
     { name: "Contact", href: "/#contact" },
@@ -96,19 +98,29 @@ export default function Navbar() {
                     closeTimer.current = setTimeout(() => setSubmenuOpen(false), 200);
                   }}
                 >
-                  <button className="flex items-center gap-1 text-foreground hover:text-blue-500 transition-colors">
-                    {item.name}
-                    <svg
-                      className={`w-4 h-4 transition-transform duration-200 ${submenuOpen ? "rotate-180" : "rotate-0"
-                        }`}
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
+                  <div className="flex items-center gap-1 group text-foreground hover:text-blue-500 transition-colors">
+                    <Link
+                      href={item.href!}
+                      className="hover:underline group-hover:text-blue-500"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
+                      {item.name}
+                    </Link>
+                    <button
+                      aria-label="Toggle submenu"
+                      className="hover:text-blue-500"
+                    >
+                      <svg
+                        className={`w-4 h-4 transition-transform duration-200 ${submenuOpen ? "rotate-180" : "rotate-0"}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+
 
                   {submenuOpen && (
                     <ul className="absolute left-0 mt-2 w-52 bg-background  border border-gray-200  shadow-lg rounded opacity-100 transition-opacity duration-300 ease-in-out z-50">
@@ -163,22 +175,35 @@ export default function Navbar() {
             {links.map((item) =>
               item.submenu ? (
                 <li key={item.name}>
-                  <button
-                    onClick={() => setSubmenuOpen(!submenuOpen)}
-                    className="flex justify-between w-full text-foreground hover:text-blue-500"
-                  >
-                    {item.name}
-                    <svg
-                      className={`w-4 h-4 ml-1 transition-transform duration-300 ${submenuOpen ? "rotate-180" : "rotate-0"
-                        }`}
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
+                  <div className="flex justify-between items-center">
+                    {/* Tools link */}
+                    <Link
+                      href={item.href!}
+                      className="text-foreground hover:text-blue-500"
+                      onClick={() => setIsOpen(false)}
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
+                      {item.name}
+                    </Link>
+
+                    {/* Toggle submenu arrow */}
+                    <button
+                      onClick={() => setSubmenuOpen(!submenuOpen)}
+                      aria-label="Toggle submenu"
+                      className="text-foreground hover:text-blue-500"
+                    >
+                      <svg
+                        className={`w-4 h-4 ml-1 transition-transform duration-300 ${submenuOpen ? "rotate-180" : "rotate-0"}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Submenu items */}
                   <ul
                     className={`pl-4 mt-2 space-y-1 transition-all duration-300 ease-in-out overflow-hidden ${submenuOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
                       }`}
@@ -187,9 +212,7 @@ export default function Navbar() {
                       <li key={subitem.href}>
                         <Link
                           href={subitem.href}
-                          onClick={(e) =>
-                            scrollIfOnHome(e, subitem.href.replace("/", ""))
-                          }
+                          onClick={() => setIsOpen(false)}
                           className="block text-foreground hover:text-blue-500"
                         >
                           {subitem.name}
@@ -210,6 +233,7 @@ export default function Navbar() {
                 </li>
               )
             )}
+
             <li className="border-t pt-3">
               <button
                 onClick={toggleDarkMode}

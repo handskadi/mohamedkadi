@@ -1,12 +1,12 @@
-
 import Link from 'next/link';
+import { Image, ScanLine, MoveDiagonal } from 'lucide-react';
+import { ReactNode } from 'react';
 
-
-
-function ToolCard({ title, description }: { title: string; description: string }) {
+function ToolCard({ title, description, icon }: { title: string; description: string; icon: ReactNode }) {
     return (
-        <div className="rounded-xl border border-gray-200 bg-white p-6 hover:shadow-lg transition duration-200 h-full">
-            <h2 className="text-xl font-semibold text-blue-700 mb-2">{title}</h2>
+        <div className="rounded-xl border border-gray-200 bg-white p-6 hover:shadow-lg transition duration-200 h-full flex flex-col items-center text-center gap-3">
+            <div className="text-blue-600">{icon}</div>
+            <h2 className="text-xl font-semibold text-blue-700">{title}</h2>
             <p className="text-sm text-gray-600">{description}</p>
         </div>
     );
@@ -42,16 +42,19 @@ export default function ToolsPage() {
             name: 'Image Compressor & WebP Converter',
             description: 'Compress and convert PNG/JPG images to WebP. Preview differences, control quality, and download optimized results.',
             href: '/tools/image-compressor',
+            icon: <Image className="w-8 h-8" />,
         },
         {
-            name: 'PDF Compressor',
-            description: 'Shrink PDF file sizes while retaining quality. Great for uploads, email attachments, and faster sharing.',
-            href: '/tools/pdf-compressor',
+            name: 'Favicon & Icon Generator',
+            description: 'Generate favicons and app icons from any image. Crop, preview, export all necessary sizes and HTML meta tags in one click.',
+            href: '/tools/favicon-generator',
+            icon: <ScanLine className="w-8 h-8" />,
         },
         {
             name: 'Image Resizer Tool',
             description: 'Resize large images to fit website or social platform dimensions without losing clarity.',
             href: '/tools/image-resizer',
+            icon: <MoveDiagonal className="w-8 h-8" />,
         },
     ];
 
@@ -68,7 +71,7 @@ export default function ToolsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                 {tools.map((tool) => (
                     <Link key={tool.name} href={tool.href} className="h-full">
-                        <ToolCard title={tool.name} description={tool.description} />
+                        <ToolCard title={tool.name} description={tool.description} icon={tool.icon} />
                     </Link>
                 ))}
             </div>
