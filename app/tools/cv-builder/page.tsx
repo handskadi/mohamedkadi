@@ -1,7 +1,88 @@
 // app/tools/cv-builder/page.tsx
 import Link from "next/link";
+import { Metadata } from "next";
+import {
+    Smile,
+    LayoutTemplate,
+    ScanLine,
+    FileText,
+    FileDown,
+    ImageIcon,
+} from "lucide-react";
+
+// SEO Metadata
+export const metadata: Metadata = {
+    title: "Free CV Builder | Create Your Resume Online | ATS Friendly",
+    description:
+        "Build a professional, ATS-friendly CV in minutes. No signup required. Choose from modern templates and export your resume as a PDF — for free!",
+    keywords: [
+        "CV builder",
+        "free resume maker",
+        "ATS friendly CV",
+        "download resume",
+        "job CV generator",
+        "professional CV",
+        "no login CV builder",
+    ],
+    openGraph: {
+        title: "Free CV Builder | ATS-Optimized Resume Generator",
+        description:
+            "Create a job-winning CV with our free builder. Choose a template, fill in your info, and download your resume instantly — no sign-up needed.",
+        url: "https://yourdomain.com/tools/cv-builder",
+        siteName: "YourSiteName",
+        images: [
+            {
+                url: "https://yourdomain.com/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "Free CV Builder - Create Resume Online",
+            },
+        ],
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Free CV Builder | Create a Resume Online for Free",
+        description:
+            "Use our step-by-step CV builder to generate a professional resume in minutes. No sign-up. Just download.",
+        images: ["https://yourdomain.com/og-image.png"],
+    },
+};
 
 export default function CVBuilderLandingPage() {
+    const features = [
+        {
+            title: "Free & Easy to Use",
+            desc: "No signup or payment required — just build and export.",
+            icon: <Smile className="text-green-500 w-6 h-6 mb-2" />,
+        },
+        {
+            title: "Modern Templates",
+            desc: "Choose from stylish, professional CV designs.",
+            icon: <LayoutTemplate className="text-green-500 w-6 h-6 mb-2" />,
+        },
+        {
+            title: "ATS Friendly",
+            desc: "Pass automated resume scanners with optimized layouts.",
+            icon: <ScanLine className="text-green-500 w-6 h-6 mb-2" />,
+        },
+        {
+            title: "Multi-Step Builder",
+            desc: "Enter details step by step with live preview.",
+            icon: <FileText className="text-green-500 w-6 h-6 mb-2" />,
+        },
+        {
+            title: "Download as PDF",
+            desc: "Export your resume as a clean, sharable PDF.",
+            icon: <FileDown className="text-green-500 w-6 h-6 mb-2" />,
+        },
+        {
+            title: "Optional Photo",
+            desc: "Add a profile photo if desired — or leave it out.",
+            icon: <ImageIcon className="text-green-500 w-6 h-6 mb-2" />,
+        },
+    ];
+
     return (
         <main className="bg-white text-gray-800">
             {/* HERO */}
@@ -22,17 +103,13 @@ export default function CVBuilderLandingPage() {
                 <div className="max-w-6xl mx-auto text-center">
                     <h2 className="text-3xl font-bold mb-12">Why Use Our CV Builder?</h2>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {[
-                            ["Free & Easy to Use", "No signup or payment required — just build and export."],
-                            ["Modern Templates", "Choose from stylish, professional CV designs."],
-                            ["ATS Friendly", "Pass automated resume scanners with optimized layouts."],
-                            ["Multi-Step Builder", "Enter details step by step with live preview."],
-                            ["Download as PDF", "Export your resume as a clean, sharable PDF."],
-                            ["Optional Photo", "Add a profile photo if desired — or leave it out."],
-                        ].map(([title, desc]) => (
+                        {features.map(({ title, desc, icon }) => (
                             <div key={title} className="bg-white p-6 rounded shadow hover:shadow-lg transition">
-                                <h3 className="text-xl font-semibold mb-2">{title}</h3>
-                                <p className="text-gray-600">{desc}</p>
+                                <div className="flex flex-col items-center">
+                                    {icon}
+                                    <h3 className="text-xl font-semibold mb-2">{title}</h3>
+                                    <p className="text-gray-600 text-sm">{desc}</p>
+                                </div>
                             </div>
                         ))}
                     </div>

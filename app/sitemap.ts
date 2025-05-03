@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools",
     "/tools/image-compressor",
     "/tools/favicon-generator",
+    "/tools/cv-builder",
     "/contact",
     "/ⵎⴰⴷ-ⴳⵉⵖ",
   ];

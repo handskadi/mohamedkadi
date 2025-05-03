@@ -69,6 +69,8 @@ export default function Navbar() {
       items: [
         { name: "Image Compressor", href: "/tools/image-compressor" },
         { name: "Favicon Generator", href: "/tools/favicon-generator" },
+        { name: "CV Builder", href: "/tools/cv-builder" }
+
       ],
     },
     { name: "Contact", href: "/#contact" },

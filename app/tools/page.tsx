@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Image, ScanLine, MoveDiagonal } from 'lucide-react';
+import { Image, ScanLine, MoveDiagonal, FileText } from 'lucide-react';
 import { ReactNode } from 'react';
 
 function ToolCard({ title, description, icon }: { title: string; description: string; icon: ReactNode }) {
@@ -50,12 +50,19 @@ export default function ToolsPage() {
             href: '/tools/favicon-generator',
             icon: <ScanLine className="w-8 h-8" />,
         },
+
         {
-            name: 'Image Resizer Tool',
-            description: 'Resize large images to fit website or social platform dimensions without losing clarity.',
-            href: '/tools/image-resizer',
-            icon: <MoveDiagonal className="w-8 h-8" />,
+            name: 'CV Builder',
+            description: 'Create a professional, ATS-optimized CV in minutes. Choose a template, enter your info, and download as PDF — free and no sign-up.',
+            href: '/tools/cv-builder',
+            icon: <FileText className="w-8 h-8" />,
         },
+        // {
+        //     name: 'Image Resizer Tool',
+        //     description: 'Resize large images to fit website or social platform dimensions without losing clarity.',
+        //     href: '/tools/image-resizer',
+        //     icon: <MoveDiagonal className="w-8 h-8" />,
+        // },
     ];
 
     return (
