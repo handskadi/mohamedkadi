@@ -30,21 +30,32 @@ export default function PersonalDetailsPage() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-start">
-                    <div className="sm:col-span-1 flex flex-col items-center">
-                        <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+                    <div className="sm:col-span-1 flex flex-col items-center justify-center text-center">
+                        <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md bg-gray-100">
                             {personal.photo ? (
-                                <img src={personal.photo} className="object-cover w-full h-full" />
+                                <img
+                                    src={personal.photo}
+                                    alt="Profile"
+                                    className="object-cover w-full h-full"
+                                />
                             ) : (
-                                <span className="text-xs">Add photo</span>
+                                <div className="flex items-center justify-center h-full text-gray-400 text-xs">
+                                    Add Photo
+                                </div>
                             )}
                         </div>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handlePhotoUpload}
-                            className="text-xs mt-2"
-                        />
+
+                        <label className="mt-3 inline-block cursor-pointer text-indigo-600 text-sm font-medium hover:underline">
+                            Upload Photo
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handlePhotoUpload}
+                                className="hidden"
+                            />
+                        </label>
                     </div>
+
 
                     <div className="sm:col-span-2 grid sm:grid-cols-2 gap-4">
                         <input

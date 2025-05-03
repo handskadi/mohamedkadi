@@ -2,6 +2,27 @@
 
 import { useCVStore } from "../../context/useCVStore";
 
+// Convert numeric levels into readable labels
+const getLevelLabel = (val: string | number): string => {
+    const num = parseInt(val as string);
+    const cefr: Record<number, string> = {
+        120: "A1",
+        130: "A2",
+        140: "B1",
+        160: "B2",
+        180: "C1",
+        200: "C2",
+    };
+
+    if (cefr[num]) return cefr[num];
+    if (num >= 90) return "Expert";
+    if (num >= 75) return "Experienced";
+    if (num >= 50) return "Skillful";
+    if (num >= 25) return "Intermediate";
+    if (num >= 10) return "Beginner";
+    return "";
+};
+
 export default function Template1() {
     const {
         personal,
@@ -22,59 +43,50 @@ export default function Template1() {
     const isVisible = (sectionKey: string) => !hiddenSections.includes(sectionKey);
 
     return (
-        <div className="text-gray-800 font-sans text-sm space-y-6">
+        <div className="max-w-[800px] mx-auto bg-white shadow-xl text-gray-900 font-sans text-[15px] leading-relaxed px-10 py-12 print:px-10 print:py-10 space-y-10">
             {/* Header */}
             {isVisible("personal") && (
-                <div className="border-b pb-4 flex items-start gap-4">
+                <header className="border-b border-gray-300 pb-6 flex items-center gap-6">
                     {personal.photo && (
                         <img
                             src={personal.photo}
                             alt="Profile"
-                            className="w-20 h-20 object-cover rounded-full border"
+                            className="w-24 h-24 object-cover rounded-full border shadow"
                         />
                     )}
                     <div>
-                        <h1 className="text-2xl font-bold">
+                        <h1 className="text-3xl font-bold tracking-tight mb-1">
                             {personal.firstName} {personal.lastName}
                         </h1>
                         <p className="text-gray-600">
                             {personal.email} · {personal.phone} · {personal.city}
                         </p>
                     </div>
-                </div>
+                </header>
             )}
 
+            {/* Sections */}
             {isVisible("objective") && objective && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">Objective</h2>
+                <Section title="Professional Summary">
                     <p>{objective}</p>
-                </section>
+                </Section>
             )}
 
             {isVisible("experience") && experience.length > 0 && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">Work Experience</h2>
+                <Section title="Work Experience">
                     {experience.map((exp, idx) => (
-                        <div key={idx} className="mb-3">
-                            <p className="font-medium">
-                                {exp.title} at {exp.employer} — {exp.city}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                                {exp.startDate} – {exp.endDate}
-                            </p>
-                            <p>{exp.description}</p>
-                        </div>
+                        <Entry key={idx} {...exp} />
                     ))}
-                </section>
+                </Section>
             )}
 
             {isVisible("education") && education.length > 0 && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">Education</h2>
+                <Section title="Education">
                     {education.map((edu, idx) => (
                         <div key={idx} className="mb-3">
                             <p className="font-medium">
-                                {edu.degree} at {edu.school} — {edu.city}
+                                {[edu.degree, edu.school].filter(Boolean).join(" at ")}
+                                {edu.city && ` — ${edu.city}`}
                             </p>
                             <p className="text-sm text-gray-500">
                                 {edu.startDate} – {edu.endDate}
@@ -82,109 +94,122 @@ export default function Template1() {
                             <p>{edu.description}</p>
                         </div>
                     ))}
-                </section>
+                </Section>
             )}
 
             {isVisible("skills") && skills.length > 0 && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">Skills</h2>
-                    <ul className="list-disc list-inside">
+                <Section title="Skills">
+                    <ul className="grid grid-cols-2 list-disc list-inside text-gray-800 gap-x-4">
                         {skills.map((s, idx) => (
                             <li key={idx}>
                                 {s.name}
-                                {s.level && ` — ${s.level}`}
+                                {s.level && ` — ${getLevelLabel(s.level)}`}
                             </li>
                         ))}
                     </ul>
-                </section>
+                </Section>
             )}
 
             {isVisible("languages") && languages.length > 0 && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">Languages</h2>
-                    <ul className="list-disc list-inside">
+                <Section title="Languages">
+                    <ul className="grid grid-cols-2 list-disc list-inside text-gray-800 gap-x-4">
                         {languages.map((l, idx) => (
                             <li key={idx}>
                                 {l.name}
-                                {l.level && ` — ${l.level}`}
+                                {l.level && ` — ${getLevelLabel(l.level)}`}
                             </li>
                         ))}
                     </ul>
-                </section>
+                </Section>
             )}
 
             {isVisible("courses") && courses.length > 0 && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">Courses</h2>
+                <Section title="Courses">
                     {courses.map((c, idx) => (
-                        <div key={idx} className="mb-2">
-                            <p className="font-medium">
-                                {c.name} — {c.institution}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                                {c.start} – {c.end}
-                            </p>
-                            <p>{c.description}</p>
-                        </div>
+                        <Entry key={idx} title={c.name} subtitle={c.institution} startDate={c.start} endDate={c.end} description={c.description} />
                     ))}
-                </section>
+                </Section>
             )}
 
             {isVisible("publications") && publications.length > 0 && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">Publications</h2>
-                    <ul className="list-disc list-inside">
-                        {publications.map((item, idx) => (
-                            <li key={idx}>{item}</li>
-                        ))}
+                <Section title="Publications">
+                    <ul className="list-disc list-inside text-gray-800">
+                        {publications.map((item, idx) => <li key={idx}>{item}</li>)}
                     </ul>
-                </section>
+                </Section>
             )}
 
             {isVisible("achievements") && achievements.length > 0 && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">Achievements</h2>
-                    <ul className="list-disc list-inside">
-                        {achievements.map((item, idx) => (
-                            <li key={idx}>{item}</li>
-                        ))}
+                <Section title="Achievements">
+                    <ul className="list-disc list-inside text-gray-800">
+                        {achievements.map((item, idx) => <li key={idx}>{item}</li>)}
                     </ul>
-                </section>
+                </Section>
             )}
 
             {isVisible("interests") && interests.length > 0 && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">Interests</h2>
-                    <ul className="list-disc list-inside">
-                        {interests.map((item, idx) => (
-                            <li key={idx}>{item.name}</li>
-                        ))}
+                <Section title="Interests">
+                    <ul className="list-disc list-inside text-gray-800">
+                        {interests.map((item, idx) => <li key={idx}>{item.name}</li>)}
                     </ul>
-                </section>
+                </Section>
             )}
 
             {isVisible("references") && references.length > 0 && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">References</h2>
+                <Section title="References">
                     {references.map((ref, idx) => (
-                        <div key={idx} className="mb-2">
-                            <p className="font-medium">{ref.person} at {ref.company}</p>
-                            <p className="text-sm text-gray-600">{ref.email} · {ref.phone}</p>
+                        <div key={idx} className="mb-3">
+                            <div className="font-medium">{ref.person} — {ref.company}</div>
+                            <div className="text-sm text-gray-500">{ref.email} · {ref.phone}</div>
                         </div>
                     ))}
-                </section>
+                </Section>
             )}
 
             {isVisible("custom") && customSections.length > 0 && (
-                <section>
-                    <h2 className="text-lg font-semibold text-indigo-700 mb-1">Additional Notes</h2>
-                    <ul className="list-disc list-inside">
-                        {customSections.map((item, idx) => (
-                            <li key={idx}>{item}</li>
-                        ))}
+                <Section title="Additional Information">
+                    <ul className="list-disc list-inside text-gray-800">
+                        {customSections.map((item, idx) => <li key={idx}>{item}</li>)}
                     </ul>
-                </section>
+                </Section>
             )}
         </div>
     );
 }
+
+// 📌 Section component
+const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <section className="space-y-3">
+        <h2 className="text-lg font-semibold text-indigo-700 border-b pb-1 border-gray-200">
+            {title}
+        </h2>
+        <div>{children}</div>
+    </section>
+);
+
+// 📌 Entry block for jobs, education, courses, etc.
+const Entry = ({
+    title,
+    subtitle,
+    city,
+    startDate,
+    endDate,
+    description
+}: {
+    title: string;
+    subtitle?: string;
+    city?: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}) => (
+    <div className="mb-5">
+        <div className="flex justify-between font-medium text-gray-900">
+            <span>{title}{subtitle && ` — ${subtitle}`}{city && `, ${city}`}</span>
+            <span className="text-sm text-gray-500">
+                {startDate} – {endDate}
+            </span>
+        </div>
+        <p className="text-gray-700">{description}</p>
+    </div>
+);

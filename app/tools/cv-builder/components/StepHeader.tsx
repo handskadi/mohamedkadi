@@ -1,5 +1,6 @@
-// components/StepHeader.tsx
 "use client";
+
+import Link from "next/link";
 
 type StepHeaderProps = {
     title: string;
@@ -8,9 +9,9 @@ type StepHeaderProps = {
 
 export default function StepHeader({ title, currentStep }: StepHeaderProps) {
     const steps = [
-        { number: 1, label: "Personal" },
-        { number: 2, label: "Experiences" },
-        { number: 3, label: "Template" },
+        { number: 1, label: "Personal", href: "/tools/cv-builder/personal-details" },
+        { number: 2, label: "Experiences", href: "/tools/cv-builder/experiences" },
+        { number: 3, label: "Template", href: "/tools/cv-builder/templates" },
     ];
 
     return (
@@ -19,28 +20,29 @@ export default function StepHeader({ title, currentStep }: StepHeaderProps) {
 
             <div className="mt-6 flex justify-center gap-4 text-sm">
                 {steps.map((step, idx) => (
-                    <>
+                    <div key={step.number} className="flex items-center gap-1">
                         {idx !== 0 && <div className="w-6 h-px bg-white my-auto" />}
-                        <div
-                            key={step.number}
-                            className={`flex items-center gap-1 ${step.number === currentStep
-                                ? "opacity-90"
-                                : step.number < currentStep
-                                    ? "opacity-100"
-                                    : "opacity-60"
-                                }`}
-                        >
+                        {step.number === currentStep ? (
                             <div
-                                className={`w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${step.number === currentStep
-                                    ? "bg-white text-green-600"
-                                    : "border-2 border-white text-white"
-                                    }`}
+                                className={`flex items-center gap-1 opacity-90`}
                             >
-                                {step.number}
+                                <div className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold bg-white text-green-600">
+                                    {step.number}
+                                </div>
+                                <span>{step.label}</span>
                             </div>
-                            <span>{step.label}</span>
-                        </div>
-                    </>
+                        ) : (
+                            <Link
+                                href={step.href}
+                                className="flex items-center gap-1 opacity-60 hover:opacity-100 transition"
+                            >
+                                <div className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold border-2 border-white text-white">
+                                    {step.number}
+                                </div>
+                                <span className="underline">{step.label}</span>
+                            </Link>
+                        )}
+                    </div>
                 ))}
             </div>
         </section>

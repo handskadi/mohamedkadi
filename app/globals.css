@@ -11,6 +11,8 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Media queries */
+
 /* Default Light Mode */
 body,
 .bg-background {
