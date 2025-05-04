@@ -1,20 +1,25 @@
 "use client";
 
 import { useCVStore } from "../context/useCVStore";
-import Template1 from "../templates/CVTemplates/Template1";
+import Template1PDF from "../templates/CVTemplates/Template1PDF";
+import Template2PDF from "../templates/CVTemplates/Template2PDF";
 
 export default function CVPrintableWrapper() {
-    const { selectedTemplate, personal } = useCVStore();
+    const { selectedTemplate = "template1", personal } = useCVStore();
 
-    // Early return if data is missing to avoid errors
     if (!personal || !personal.firstName) {
-        return <p className="text-gray-500 text-sm">No CV data found. Please go back and fill out your resume.</p>;
+        return (
+            <p className="text-gray-500 text-sm">
+                No CV data found. Please go back and fill out your resume.
+            </p>
+        );
     }
 
-    // Only support Template1 for now
-    return selectedTemplate === "template1" || !selectedTemplate ? (
-        <Template1 />
-    ) : (
-        <Template1 />
-    );
+    switch (selectedTemplate) {
+        case "template2":
+            return <Template2PDF />;
+        case "template1":
+        default:
+            return <Template1PDF />;
+    }
 }

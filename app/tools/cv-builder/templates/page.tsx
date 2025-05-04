@@ -12,7 +12,8 @@ export default function TemplateSelectionPage() {
     const [showModal, setShowModal] = useState(false);
 
     const templates = [
-        { id: "Template1", name: "Modern Clean", previewImg: "/template1-thumb.png" },
+        { id: "Template1", name: "Modern Clean", previewImg: "/template1.webp" },
+        { id: "template2", name: "Elegant Serif", previewImg: "/template2.webp" },
     ];
 
     return (
@@ -25,7 +26,7 @@ export default function TemplateSelectionPage() {
             <div className="max-w-5xl mx-auto p-6 bg-white rounded shadow-sm mt-[-20px]">
                 <h2 className="text-xl font-semibold mb-4">Select a template:</h2>
 
-                <div className="grid sm:grid-cols-2 gap-6 mb-10">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
                     {templates.map((tpl) => (
                         <div
                             key={tpl.id}
@@ -33,15 +34,18 @@ export default function TemplateSelectionPage() {
                                 }`}
                             onClick={() => setSelectedTemplate(tpl.id)}
                         >
-                            <img
-                                src={tpl.previewImg}
-                                alt={tpl.name}
-                                className="w-full h-40 object-cover mb-2 rounded"
-                            />
+                            <div className="w-full relative pb-[141.4%] bg-white mb-2 rounded overflow-hidden">
+                                <img
+                                    src={tpl.previewImg}
+                                    alt={tpl.name}
+                                    className="absolute top-0 left-0 w-full h-full object-contain"
+                                />
+                            </div>
                             <p className="text-center font-medium">{tpl.name}</p>
                         </div>
                     ))}
                 </div>
+
 
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-semibold">Live Preview:</h2>
