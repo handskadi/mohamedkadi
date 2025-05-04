@@ -8,15 +8,12 @@ export default function DownloadPDFButton() {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-        // Ensure code only runs on the client
         setIsClient(true);
     }, []);
 
     if (!isClient) {
         return (
-            <button
-                className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 font-semibold flex items-center justify-center gap-2 cursor-pointer"
-            >
+            <button className="w-full bg-blue-600 text-white py-3 rounded font-semibold text-center">
                 Preparing...
             </button>
         );
@@ -25,9 +22,7 @@ export default function DownloadPDFButton() {
     return (
         <PDFDownloadLink document={<CVDocument />} fileName="my-resume.pdf">
             {({ loading }) => (
-                <button
-                    className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 font-semibold flex items-center justify-center gap-2 cursor-pointer"
-                >
+                <button className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 font-semibold">
                     {loading ? "Preparing..." : "Download PDF"}
                 </button>
             )}
