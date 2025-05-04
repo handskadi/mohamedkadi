@@ -5,13 +5,17 @@
   --foreground-light: #171717;
   --background-dark: #0a0a0a;
   --foreground-dark: #ededed;
+
+  /* Override Tailwind v4 unsafe color tokens (if used anywhere) */
+  --tw-color-primary: #20b86d;
+  --tw-color-secondary: #2563eb;
+  --tw-color-foreground: #171717;
+  --tw-color-background: #ffffff;
 }
 
 html {
   scroll-behavior: smooth;
 }
-
-/* Media queries */
 
 /* Default Light Mode */
 body,
@@ -38,4 +42,29 @@ body,
 /* Smooth transitions */
 * {
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Media queries */
+@media print {
+  body {
+    background: white !important;
+  }
+
+  .noprint {
+    display: none !important;
+  }
+
+  #print-area {
+    display: block;
+    page-break-after: always;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm;
+    margin: auto;
+    box-sizing: border-box;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+  }
 }

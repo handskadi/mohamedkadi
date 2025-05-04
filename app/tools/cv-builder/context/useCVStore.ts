@@ -26,6 +26,7 @@ type PersonalInfo = {
 type ExperienceItem = {
   title: string;
   city: string;
+  company: string;
   employer: string;
   startDate: string;
   endDate: string;
@@ -301,6 +302,7 @@ export const useCVStore = create<CVState>()(
               title: "",
               city: "",
               employer: "",
+              company: "",
               startDate: "",
               endDate: "",
               description: "",
