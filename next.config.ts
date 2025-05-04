@@ -1,7 +1,6 @@
-import { NextConfig } from "next";
-import { Configuration } from "webpack";
+import type { NextConfig } from "next";
 import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
-/** @type {import('next').NextConfig} */
+import webpack from "webpack";
 
 const nextConfig: NextConfig = {
   transpilePackages: ["crypto-js"],
@@ -27,7 +26,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  webpack(config: Configuration): Configuration {
+  webpack(config: webpack.Configuration): webpack.Configuration {
     config.plugins = config.plugins || [];
     config.plugins.push(new NodePolyfillPlugin());
 
