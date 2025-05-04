@@ -33,7 +33,6 @@
     "nodemailer": "^6.10.0",
     "patch-package": "^8.0.0",
     "png-to-ico": "^2.1.8",
-    "postinstall-postinstall": "^2.1.0",
     "react": "^19.0.0",
     "react-compare-image": "^3.5.4",
     "react-dom": "^19.0.0",
