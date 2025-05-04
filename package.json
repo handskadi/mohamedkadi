@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -30,7 +31,9 @@
     "next-intl": "^4.0.2",
     "next-sitemap": "^4.2.3",
     "nodemailer": "^6.10.0",
+    "patch-package": "^8.0.0",
     "png-to-ico": "^2.1.8",
+    "postinstall-postinstall": "^2.1.0",
     "react": "^19.0.0",
     "react-compare-image": "^3.5.4",
     "react-dom": "^19.0.0",
@@ -54,6 +57,7 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
+    "node-polyfill-webpack-plugin": "^4.1.0",
     "postcss": "^8.5.3",
     "source-map-explorer": "^2.5.3",
     "tailwindcss": "^4.0.17",
