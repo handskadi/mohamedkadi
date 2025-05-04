@@ -46,25 +46,12 @@ body,
 
 /* Media queries */
 @media print {
-  body {
-    background: white !important;
-  }
-
-  .noprint {
-    display: none !important;
-  }
-
-  #print-area {
-    display: block;
-    page-break-after: always;
-    width: 210mm;
-    min-height: 297mm;
-    padding: 20mm;
-    margin: auto;
-    box-sizing: border-box;
-  }
-
-  .avoid-break {
+  .page-break-inside-avoid {
     page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .a4-preview {
+    width: 794px;
+    height: 1123px;
   }
 }

@@ -1,34 +1,78 @@
-import { Text, View, StyleSheet, Image } from "@react-pdf/renderer";
+import { Text, View, StyleSheet, Font, Image } from "@react-pdf/renderer";
 import { useCVStore } from "@/app/tools/cv-builder/context/useCVStore";
 
+// 1. Font Registration using your local Inter font (ensure these paths are valid)
+Font.register({
+    family: "Inter",
+    fonts: [
+        {
+            src: "/fonts/Inter_24pt-Regular.ttf",
+            fontWeight: 400,
+        },
+        {
+            src: "/fonts/Inter_24pt-SemiBold.ttf",
+            fontWeight: 600,
+        },
+    ],
+});
+
+// 2. Styles matching your browser preview
 const styles = StyleSheet.create({
     container: {
+        padding: 30,
         fontSize: 11,
-        fontFamily: "Helvetica",
+        fontFamily: "Inter",
         color: "#111827",
-        lineHeight: 1.5,
+        lineHeight: 1.6,
         width: "100%",
     },
     section: {
-        marginBottom: 18,
+        marginBottom: 24,
+        paddingBottom: 6,
+        borderBottomWidth: 1,
+        borderBottomColor: "#E5E7EB",
     },
     heading: {
         fontSize: 14,
-        fontWeight: "bold",
+        fontFamily: "Inter",
+        fontWeight: 600,
         color: "#4338CA",
-        borderBottomWidth: 1,
-        borderBottomColor: "#ccc",
-        paddingBottom: 2,
-        marginBottom: 6,
+        marginBottom: 8,
     },
     image: {
         width: 70,
         height: 70,
-        borderRadius: 40,
-        marginBottom: 10,
+        borderRadius: 35,
+        marginRight: 16,
     },
-    block: {
-        marginBottom: 5,
+    row: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 16,
+    },
+    subtitle: {
+        fontFamily: "Inter",
+        fontWeight: 600,
+        fontSize: 12,
+        marginBottom: 2,
+    },
+    small: {
+        fontSize: 10,
+        fontFamily: "Inter",
+        color: "#6B7280",
+        marginBottom: 4,
+    },
+    textBlock: {
+        marginBottom: 8,
+    },
+    list2Col: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
+    bulletItem: {
+        width: "50%",
+        marginBottom: 2,
+        fontFamily: "Inter",
     },
 });
 
@@ -48,117 +92,156 @@ const getLevelLabel = (val: string | number): string => {
 
 export default function Template1PDF() {
     const {
-        personal, objective, experience, education, skills, languages,
-        interests, references, courses, achievements, publications,
-        customSections, hiddenSections
+        personal, objective, experience, education, skills,
+        languages, interests, references, courses, achievements,
+        publications, customSections, hiddenSections,
     } = useCVStore();
 
-    const show = (key: string) => !hiddenSections.includes(key);
+    const show = (key: string, list?: any[]) => {
+        const hidden = hiddenSections.includes(key);
+        if (list) return !hidden && list.length > 0;
+        if (typeof key === "string") return !hidden && !!key;
+        return !hidden;
+    };
 
     return (
         <View style={styles.container}>
-            {/* Personal */}
+            {/* Personal Info */}
             {show("personal") && (
                 <View style={styles.section} wrap={false}>
-                    {personal.photo && <Image src={personal.photo} style={styles.image} />}
-                    <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                        {personal.firstName} {personal.lastName}
-                    </Text>
-                    <Text>{personal.email} · {personal.phone} · {personal.city}</Text>
+                    <View style={styles.row}>
+                        {personal.photo && <Image src={personal.photo} style={styles.image} />}
+                        <View>
+                            <Text style={{ fontSize: 16, fontWeight: 600 }}>
+                                {personal.firstName} {personal.lastName}
+                            </Text>
+                            <Text style={styles.small}>
+                                {personal.email} · {personal.phone} · {personal.city}
+                            </Text>
+                        </View>
+                    </View>
                 </View>
             )}
 
-            {show("objective") && objective && (
+            {/* Objective */}
+            {show("objective", [objective]) && (
                 <View style={styles.section} wrap={false}>
                     <Text style={styles.heading}>Professional Summary</Text>
                     <Text>{objective}</Text>
                 </View>
             )}
 
-            {show("experience") && experience.length > 0 && (
+            {/* Experience */}
+            {show("experience", experience) && (
                 <View style={styles.section} wrap={false}>
                     <Text style={styles.heading}>Work Experience</Text>
                     {experience.map((exp, idx) => (
-                        <View key={idx} style={styles.block}>
-                            <Text style={{ fontWeight: "bold" }}>{exp.title} — {exp.company}</Text>
-                            <Text>{exp.startDate} – {exp.endDate}</Text>
+                        <View key={idx} style={styles.textBlock}>
+                            <Text style={styles.subtitle}>{exp.title} — {exp.company}</Text>
+                            <Text style={styles.small}>{exp.startDate} – {exp.endDate}</Text>
                             <Text>{exp.description}</Text>
                         </View>
                     ))}
                 </View>
             )}
 
-            {show("education") && education.length > 0 && (
+            {/* Education */}
+            {show("education", education) && (
                 <View style={styles.section} wrap={false}>
                     <Text style={styles.heading}>Education</Text>
                     {education.map((edu, idx) => (
-                        <View key={idx} style={styles.block}>
-                            <Text style={{ fontWeight: "bold" }}>{edu.degree} at {edu.school}</Text>
-                            <Text>{edu.startDate} – {edu.endDate}</Text>
+                        <View key={idx} style={styles.textBlock}>
+                            <Text style={styles.subtitle}>{edu.degree} at {edu.school}{edu.city && ` — ${edu.city}`}</Text>
+                            <Text style={styles.small}>{edu.startDate} – {edu.endDate}</Text>
                             <Text>{edu.description}</Text>
                         </View>
                     ))}
                 </View>
             )}
 
-            {show("skills") && skills.length > 0 && (
+            {/* Skills */}
+            {show("skills", skills) && (
                 <View style={styles.section} wrap={false}>
                     <Text style={styles.heading}>Skills</Text>
-                    {skills.map((s, idx) => (
-                        <Text key={idx}>{s.name} {s.level && `— ${getLevelLabel(s.level)}`}</Text>
-                    ))}
+                    <View style={styles.list2Col}>
+                        {skills.map((s, idx) => (
+                            <Text key={idx} style={styles.bulletItem}>
+                                • {s.name}{s.level && ` — ${getLevelLabel(s.level)}`}
+                            </Text>
+                        ))}
+                    </View>
                 </View>
             )}
 
-            {show("languages") && languages.length > 0 && (
+            {/* Languages */}
+            {show("languages", languages) && (
                 <View style={styles.section} wrap={false}>
                     <Text style={styles.heading}>Languages</Text>
-                    {languages.map((l, idx) => (
-                        <Text key={idx}>{l.name} {l.level && `— ${getLevelLabel(l.level)}`}</Text>
+                    <View style={styles.list2Col}>
+                        {languages.map((l, idx) => (
+                            <Text key={idx} style={styles.bulletItem}>
+                                • {l.name}{l.level && ` — ${getLevelLabel(l.level)}`}
+                            </Text>
+                        ))}
+                    </View>
+                </View>
+            )}
+
+            {/* Interests */}
+            {show("interests", interests) && (
+                <View style={styles.section} wrap={false}>
+                    <Text style={styles.heading}>Interests</Text>
+                    {interests.map((i, idx) => (
+                        <Text key={idx}>• {i.name}</Text>
                     ))}
                 </View>
             )}
 
-            {show("interests") && interests.length > 0 && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Interests</Text>
-                    {interests.map((i, idx) => <Text key={idx}>• {i.name}</Text>)}
-                </View>
-            )}
-
-            {show("references") && references.length > 0 && (
+            {/* References */}
+            {show("references", references) && (
                 <View style={styles.section} wrap={false}>
                     <Text style={styles.heading}>References</Text>
                     {references.map((ref, idx) => (
-                        <Text key={idx}>{ref.person} — {ref.company}, {ref.email} · {ref.phone}</Text>
+                        <View key={idx} style={styles.textBlock}>
+                            <Text style={styles.subtitle}>{ref.person} — {ref.company}</Text>
+                            <Text style={styles.small}>{ref.email} · {ref.phone}</Text>
+                        </View>
                     ))}
                 </View>
             )}
 
-            {show("courses") && courses.length > 0 && (
+            {/* Courses */}
+            {show("courses", courses) && (
                 <View style={styles.section} wrap={false}>
                     <Text style={styles.heading}>Courses</Text>
                     {courses.map((c, idx) => (
-                        <Text key={idx}>{c.name} at {c.institution} ({c.start} – {c.end})</Text>
+                        <View key={idx} style={styles.textBlock}>
+                            <Text style={styles.subtitle}>{c.name} at {c.institution}</Text>
+                            <Text style={styles.small}>{c.start} – {c.end}</Text>
+                            <Text>{c.description}</Text>
+                        </View>
                     ))}
                 </View>
             )}
 
-            {show("achievements") && achievements.length > 0 && (
+            {/* Achievements */}
+            {show("achievements", achievements) && (
                 <View style={styles.section} wrap={false}>
                     <Text style={styles.heading}>Achievements</Text>
                     {achievements.map((a, idx) => <Text key={idx}>• {a}</Text>)}
                 </View>
             )}
 
-            {show("publications") && publications.length > 0 && (
+            {/* Publications */}
+            {show("publications", publications) && (
                 <View style={styles.section} wrap={false}>
                     <Text style={styles.heading}>Publications</Text>
                     {publications.map((p, idx) => <Text key={idx}>• {p}</Text>)}
                 </View>
             )}
 
-            {show("custom") && customSections.length > 0 && (
+            {/* Custom Sections */}
+            {show("custom", customSections) && (
                 <View style={styles.section} wrap={false}>
                     <Text style={styles.heading}>Additional Info</Text>
                     {customSections.map((c, idx) => <Text key={idx}>• {c}</Text>)}
