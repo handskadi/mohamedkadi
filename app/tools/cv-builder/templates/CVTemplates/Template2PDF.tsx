@@ -1,77 +1,81 @@
-import { Text, View, StyleSheet, Image, Font } from "@react-pdf/renderer";
+import { Text, View, Image, StyleSheet } from "@react-pdf/renderer";
 import { useCVStore } from "@/app/tools/cv-builder/context/useCVStore";
 
-// Optional custom font
-Font.register({
-    family: "System",
-    fonts: [
-        {
-            src: "/fonts/Inter_18pt-Regular.ttf",
-            fontWeight: 400,
-        },
-        {
-            src: "/fonts/Inter_18pt-SemiBold.ttf",
-            fontWeight: 600,
-        },
-    ],
-});
-
 const styles = StyleSheet.create({
-    container: {
-        padding: 30,
-        fontSize: 11,
-        fontFamily: "System",
-        color: "#1f2937",
-        lineHeight: 1.6,
+    pageWrapper: {
+        flexDirection: "row",
+        fontSize: 12,
+        fontFamily: "Helvetica",
+        color: "#111827",
+        width: "100%",
     },
-    section: {
-        marginBottom: 20,
+    sidebar: {
+        width: "35%",
+        backgroundColor: "#0f766e",
+        color: "#ffffff",
+        padding: 24,
+        paddingTop: 40,
+        minHeight: "100%",
+    },
+    main: {
+        width: "65%",
+        padding: 32,
+        paddingTop: 40,
+    },
+    photo: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        marginBottom: 16,
+    },
+    name: {
+        fontSize: 20,
+        fontWeight: 600,
+        marginBottom: 4,
+        color: "white",
+    },
+    contact: {
+        fontSize: 12,
+        marginBottom: 12,
+        color: "white",
     },
     heading: {
-        fontSize: 13,
+        fontSize: 18,
         fontWeight: 600,
-        color: "#10B981", // green-500
-        marginBottom: 6,
+        color: "#4338CA",
         borderBottomWidth: 1,
         borderBottomColor: "#E5E7EB",
         paddingBottom: 4,
-    },
-    image: {
-        width: 70,
-        height: 70,
-        borderRadius: 35,
-        marginRight: 12,
-    },
-    row: {
-        flexDirection: "row",
-        alignItems: "center",
         marginBottom: 12,
     },
-    subtitle: {
+    subheading: {
         fontWeight: 600,
         marginBottom: 2,
     },
-    small: {
-        fontSize: 10,
+    muted: {
+        fontSize: 13,
         color: "#6B7280",
         marginBottom: 2,
     },
-    bullet: {
-        fontSize: 11,
-        marginBottom: 2,
+    section: {
+        marginBottom: 28,
     },
-    colList: {
-        flexDirection: "row",
-        flexWrap: "wrap",
+    list: {
+        fontSize: 14,
+        lineHeight: 1.6,
+        marginBottom: 3,
     },
-    colItem: {
-        width: "50%",
-        marginBottom: 2,
+    listItem: {
+        marginBottom: 3,
     },
 });
 
-const getLevelLabel = (val: string | number) => {
+const getLevelLabel = (val: string | number): string => {
     const num = parseInt(val as string);
+    const labels: Record<number, string> = {
+        120: "A1", 130: "A2", 140: "B1", 160: "B2", 180: "C1", 200: "C2",
+    };
+    if (labels[num]) return labels[num];
     if (num >= 90) return "Expert";
     if (num >= 75) return "Experienced";
     if (num >= 50) return "Skillful";
@@ -82,149 +86,144 @@ const getLevelLabel = (val: string | number) => {
 
 export default function Template2PDF() {
     const {
-        personal, objective, experience, education, skills,
-        languages, interests, references, courses, achievements,
-        publications, customSections, hiddenSections
+        personal, objective, experience, education, skills, interests,
+        references, languages, courses, achievements, publications,
+        customSections, hiddenSections,
     } = useCVStore();
 
     const show = (key: string, list?: any[]) => {
-        const hidden = hiddenSections.includes(key);
-        if (list) return !hidden && list.length > 0;
-        if (typeof key === "string") return !hidden && !!key;
-        return !hidden;
+        const isHidden = hiddenSections.includes(key);
+        if (list) return !isHidden && list.length > 0;
+        return !isHidden;
     };
 
     return (
-        <View style={styles.container}>
-            {/* Personal */}
-            {show("personal") && (
-                <View style={styles.section} wrap={false}>
-                    <View style={styles.row}>
-                        {personal.photo && <Image src={personal.photo} style={styles.image} />}
-                        <View>
-                            <Text style={{ fontSize: 16, fontWeight: 600 }}>{personal.firstName} {personal.lastName}</Text>
-                            <Text style={styles.small}>{personal.email} · {personal.phone} · {personal.city}</Text>
-                        </View>
-                    </View>
-                </View>
-            )}
+        <View style={styles.pageWrapper}>
+            {/* Sidebar */}
+            <View style={styles.sidebar}>
+                {personal.photo && <Image src={personal.photo} style={styles.photo} />}
+                <Text style={styles.name}>{personal.firstName} {personal.lastName}</Text>
+                <Text style={styles.contact}>{personal.email} · {personal.phone} · {personal.city}</Text>
 
-            {show("objective", [objective]) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Summary</Text>
-                    <Text>{objective}</Text>
-                </View>
-            )}
-
-            {show("experience", experience) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Experience</Text>
-                    {experience.map((e, i) => (
-                        <View key={i}>
-                            <Text style={styles.subtitle}>{e.title} — {e.company}</Text>
-                            <Text style={styles.small}>{e.startDate} – {e.endDate}</Text>
-                            <Text>{e.description}</Text>
-                        </View>
-                    ))}
-                </View>
-            )}
-
-            {show("education", education) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Education</Text>
-                    {education.map((e, i) => (
-                        <View key={i}>
-                            <Text style={styles.subtitle}>{e.degree} at {e.school}{e.city && ` — ${e.city}`}</Text>
-                            <Text style={styles.small}>{e.startDate} – {e.endDate}</Text>
-                            <Text>{e.description}</Text>
-                        </View>
-                    ))}
-                </View>
-            )}
-
-            {show("skills", skills) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Skills</Text>
-                    <View style={styles.colList}>
+                {show("skills", skills) && (
+                    <SidebarSection title="Skills">
                         {skills.map((s, i) => (
-                            <Text key={i} style={styles.colItem}>
-                                • {s.name} {s.level && `— ${getLevelLabel(s.level)}`}
+                            <Text key={i} style={styles.listItem}>
+                                • {s.name}{s.level && ` — ${getLevelLabel(s.level)}`}
                             </Text>
                         ))}
-                    </View>
-                </View>
-            )}
+                    </SidebarSection>
+                )}
 
-            {show("languages", languages) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Languages</Text>
-                    <View style={styles.colList}>
+                {show("languages", languages) && (
+                    <SidebarSection title="Languages">
                         {languages.map((l, i) => (
-                            <Text key={i} style={styles.colItem}>
-                                • {l.name} {l.level && `— ${getLevelLabel(l.level)}`}
+                            <Text key={i} style={styles.listItem}>
+                                • {l.name}{l.level && ` — ${getLevelLabel(l.level)}`}
                             </Text>
                         ))}
-                    </View>
-                </View>
-            )}
+                    </SidebarSection>
+                )}
 
-            {show("achievements", achievements) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Achievements</Text>
-                    {achievements.map((a, i) => <Text key={i} style={styles.bullet}>• {a}</Text>)}
-                </View>
-            )}
+                {show("interests", interests) && (
+                    <SidebarSection title="Interests">
+                        {interests.map((i, idx) => (
+                            <Text key={idx} style={styles.listItem}>• {i.name}</Text>
+                        ))}
+                    </SidebarSection>
+                )}
+            </View>
 
-            {show("interests", interests) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Interests</Text>
-                    {interests.map((i, idx) => (
-                        <Text key={idx} style={styles.bullet}>• {i.name}</Text>
-                    ))}
-                </View>
-            )}
+            {/* Main Content */}
+            <View style={styles.main}>
+                {show("objective", [objective]) && (
+                    <MainSection title="Professional Summary">
+                        <Text>{objective}</Text>
+                    </MainSection>
+                )}
 
-            {show("references", references) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>References</Text>
-                    {references.map((r, i) => (
-                        <Text key={i} style={styles.bullet}>
-                            {r.person} — {r.company}, {r.email} · {r.phone}
-                        </Text>
-                    ))}
-                </View>
-            )}
+                {show("experience", experience) && (
+                    <MainSection title="Work Experience">
+                        {experience.map((exp, idx) => (
+                            <View key={idx} style={{ marginBottom: 12 }}>
+                                <Text style={styles.subheading}>{exp.title} — {exp.company}</Text>
+                                <Text style={styles.muted}>{exp.startDate} – {exp.endDate}</Text>
+                                <Text>{exp.description}</Text>
+                            </View>
+                        ))}
+                    </MainSection>
+                )}
 
-            {show("courses", courses) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Courses</Text>
-                    {courses.map((c, i) => (
-                        <View key={i}>
-                            <Text style={styles.subtitle}>{c.name} at {c.institution}</Text>
-                            <Text style={styles.small}>{c.start} – {c.end}</Text>
-                            <Text>{c.description}</Text>
-                        </View>
-                    ))}
-                </View>
-            )}
+                {show("education", education) && (
+                    <MainSection title="Education">
+                        {education.map((edu, idx) => (
+                            <View key={idx} style={{ marginBottom: 12 }}>
+                                <Text style={styles.subheading}>
+                                    {edu.degree} at {edu.school}{edu.city && ` — ${edu.city}`}
+                                </Text>
+                                <Text style={styles.muted}>{edu.startDate} – {edu.endDate}</Text>
+                                <Text>{edu.description}</Text>
+                            </View>
+                        ))}
+                    </MainSection>
+                )}
 
-            {show("publications", publications) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Publications</Text>
-                    {publications.map((p, i) => (
-                        <Text key={i} style={styles.bullet}>• {p}</Text>
-                    ))}
-                </View>
-            )}
+                {show("courses", courses) && (
+                    <MainSection title="Courses">
+                        {courses.map((c, idx) => (
+                            <View key={idx} style={{ marginBottom: 12 }}>
+                                <Text style={styles.subheading}>{c.name} at {c.institution}</Text>
+                                <Text style={styles.muted}>{c.start} – {c.end}</Text>
+                                <Text>{c.description}</Text>
+                            </View>
+                        ))}
+                    </MainSection>
+                )}
 
-            {show("custom", customSections) && (
-                <View style={styles.section} wrap={false}>
-                    <Text style={styles.heading}>Additional Info</Text>
-                    {customSections.map((c, i) => (
-                        <Text key={i} style={styles.bullet}>• {c}</Text>
-                    ))}
-                </View>
-            )}
+                {show("references", references) && (
+                    <MainSection title="References">
+                        {references.map((r, idx) => (
+                            <View key={idx} style={{ marginBottom: 12 }}>
+                                <Text style={styles.subheading}>{r.person} — {r.company}</Text>
+                                <Text style={styles.muted}>{r.email} · {r.phone}</Text>
+                            </View>
+                        ))}
+                    </MainSection>
+                )}
+
+                {show("achievements", achievements) && (
+                    <MainSection title="Achievements">
+                        {achievements.map((a, idx) => <Text key={idx}>• {a}</Text>)}
+                    </MainSection>
+                )}
+
+                {show("publications", publications) && (
+                    <MainSection title="Publications">
+                        {publications.map((p, idx) => <Text key={idx}>• {p}</Text>)}
+                    </MainSection>
+                )}
+
+                {show("custom", customSections) && (
+                    <MainSection title="Additional Info">
+                        {customSections.map((c, idx) => <Text key={idx}>• {c}</Text>)}
+                    </MainSection>
+                )}
+            </View>
         </View>
     );
 }
+
+// Components — now with wrap={false}
+const SidebarSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <View style={{ marginTop: 24 }} wrap={false}>
+        <Text style={{ fontSize: 15, fontWeight: 600, marginBottom: 6 }}>{title}</Text>
+        <View>{children}</View>
+    </View>
+);
+
+const MainSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <View style={styles.section} wrap={false}>
+        <Text style={styles.heading}>{title}</Text>
+        <View>{children}</View>
+    </View>
+);

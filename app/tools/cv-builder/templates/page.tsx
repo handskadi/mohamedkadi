@@ -12,8 +12,8 @@ export default function TemplateSelectionPage() {
     const [showModal, setShowModal] = useState(false);
 
     const templates = [
-        { id: "Template1", name: "Modern Clean", previewImg: "/template1.webp" },
-        { id: "template2", name: "Elegant Serif", previewImg: "/template2.webp" },
+        { id: "Template1", name: "Minmal Pro", previewImg: "/template1.webp" },
+        { id: "template2", name: "Tizgzaouin", previewImg: "/template2.webp" },
     ];
 
     return (

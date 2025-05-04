@@ -7,10 +7,12 @@ import { useCVStore } from "../context/useCVStore";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-// Dynamically import the PDF component (no SSR!)
+// Dynamic import (no SSR)
 const DownloadPDFButton = dynamic(() => import("../components/DownloadPDFButton"), {
     ssr: false,
-    loading: () => <p className="text-center text-white">Preparing download...</p>,
+    loading: () => (
+        <p className="text-center text-white text-lg font-medium">Preparing download...</p>
+    ),
 });
 
 export default function DownloadPage() {
@@ -19,8 +21,7 @@ export default function DownloadPage() {
     const router = useRouter();
 
     useEffect(() => {
-        // Redirect if required fields are missing (adjust as needed)
-        if (!personal || !personal.firstName || !personal.lastName) {
+        if (!personal?.firstName || !personal?.lastName) {
             router.push("/tools/cv-builder");
         } else {
             setIsReady(true);
@@ -28,21 +29,28 @@ export default function DownloadPage() {
     }, [personal]);
 
     return (
-        <div className="min-h-screen bg-[#20B86D] py-10 px-4 mt-[80px]">
-            <div className="text-center text-white mb-10">
-                <h1 className="text-4xl font-bold">Your resume is ready!</h1>
-                <p className="mt-2 text-lg">Download your PDF below</p>
+        <div className="min-h-screen bg-[#20B86D] py-16 px-4 mt-[80px] flex flex-col justify-center items-center text-white">
+            {/* Header */}
+            <div className="text-center mb-10">
+                <h1 className="text-5xl font-bold mb-2">🎉 Your CV is ready!</h1>
+                <p className="text-lg font-medium">Download your professionally styled resume below</p>
             </div>
 
-            <div className="max-w-5xl mx-auto bg-white rounded-md shadow-md p-6">
-                {isReady ? <DownloadPDFButton /> : <p className="text-center text-gray-500">Loading your CV data...</p>}
+            {/* Download Button Box */}
+            <div className="w-full max-w-3xl bg-white rounded-xl shadow-lg px-10 py-8">
+                {isReady ? (
+                    <DownloadPDFButton />
+                ) : (
+                    <p className="text-center text-gray-500 text-base">Loading your CV data...</p>
+                )}
             </div>
 
-            <div className="text-center mt-8">
+            {/* Back to Templates */}
+            <div className="mt-10 text-center">
                 <Link href="/tools/cv-builder/templates">
-                    <button className="text-white text-sm flex items-center justify-center hover:underline">
-                        <ArrowLeft className="w-4 h-4 mr-1" />
-                        Back to templates
+                    <button className="inline-flex items-center gap-2 bg-white text-[#20B86D] px-4 py-2 rounded font-semibold hover:bg-gray-100 transition">
+                        <ArrowLeft className="w-5 h-5" />
+                        Back to Templates
                     </button>
                 </Link>
             </div>

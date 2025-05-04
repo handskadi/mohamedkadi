@@ -28,11 +28,11 @@ export const metadata: Metadata = {
         title: "Free CV Builder | ATS-Optimized Resume Generator",
         description:
             "Create a job-winning CV with our free builder. Choose a template, fill in your info, and download your resume instantly — no sign-up needed.",
-        url: "https://yourdomain.com/tools/cv-builder",
+        url: "https://mohamedkadi.com/tools/cv-builder",
         siteName: "YourSiteName",
         images: [
             {
-                url: "https://yourdomain.com/og-image.png",
+                url: "https://mohamedkadi.com/og-image.png",
                 width: 1200,
                 height: 630,
                 alt: "Free CV Builder - Create Resume Online",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         title: "Free CV Builder | Create a Resume Online for Free",
         description:
             "Use our step-by-step CV builder to generate a professional resume in minutes. No sign-up. Just download.",
-        images: ["https://yourdomain.com/og-image.png"],
+        images: ["https://mohamedkadi.com/og-image.png"],
     },
 };
 
@@ -84,7 +84,7 @@ export default function CVBuilderLandingPage() {
     ];
 
     return (
-        <main className="bg-white text-gray-800">
+        <main className="bg-white text-gray-800 mt-[80px]">
             {/* HERO */}
             <section className="bg-gradient-to-br from-green-500 to-emerald-600 text-white py-20 px-4 text-center">
                 <div className="max-w-3xl mx-auto">
