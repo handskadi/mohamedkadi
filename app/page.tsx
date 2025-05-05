@@ -12,18 +12,20 @@ import Portfolio from "../components/Portfolio";
 import Contact from "../components/Contact";
 import AboutMe from "../components/AboutMe ";
 import FloatingButton from "../components/FloatingButton";
+import ToolShowcase from "@/components/ToolShowcase";
 
 export default function Home() {
   return (
     <>
       <Hero />
       <AboutMe />
+      <ToolShowcase />
       <Features />
       <Portfolio />
       <Testimonials />
       <Skills />
-      <FaqAccordion />
       <Team />
+      <FaqAccordion />
       <Blog />
       <Banner />
       <Newsletter />
