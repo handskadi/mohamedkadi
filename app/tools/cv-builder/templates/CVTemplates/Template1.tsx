@@ -47,7 +47,7 @@ export default function Template1() {
                 <Section title="Work Experience">
                     {experience.map((exp, idx) => (
                         <div key={idx} className="mb-4">
-                            <p className="font-semibold">{exp.title} — {exp.company}</p>
+                            <p className="font-semibold">{exp.title} — {exp.employer}</p>
                             <p className="text-sm text-gray-500">{exp.startDate} – {exp.endDate}</p>
                             <p>{exp.description}</p>
                         </div>
