@@ -55,3 +55,36 @@ body,
     height: 1123px;
   }
 }
+
+/* // Settings button */
+.ch2-btn.ch2-open-settings-btn.ch2-btn-transparent {
+  padding: 0 !important;
+  color: #919191;
+  font-weight: 100;
+  border: none;
+  text-decoration: underline;
+}
+
+/* // Dialog action buttons (horizontal layout) */
+.ch2-dialog-actions {
+  display: flex;
+  flex-direction: row;
+
+  /* // Remove vertical stacking if class is present */
+  &.ch2-dialog-actions-vertical {
+    flex-direction: row !important;
+  }
+}
+
+/* // Description paragraph */
+#ch2-dialog-description {
+  line-height: 1;
+}
+
+/* // Responsive button adjustment */
+@media (max-width: 600px) {
+  .ch2-theme-bar .ch2-dialog-actions button {
+    -ms-flex-preferred-size: unset;
+    flex-basis: content !important;
+  }
+}
