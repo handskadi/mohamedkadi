@@ -75,7 +75,7 @@ export default function Template2() {
                     <MainSection title="Work Experience">
                         {experience.map((exp, idx) => (
                             <div key={idx} style={{ marginBottom: 12 }}>
-                                <div style={{ fontWeight: 600 }}>{exp.title} — {exp.company}</div>
+                                <div style={{ fontWeight: 600 }}>{exp.title} — {exp.employer}</div>
                                 <div style={{ fontSize: 13, color: "#6B7280" }}>{exp.startDate} – {exp.endDate}</div>
                                 <p>{exp.description}</p>
                             </div>
