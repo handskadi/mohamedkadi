@@ -27,6 +27,7 @@ export default function Template2() {
         return !isHidden;
     };
 
+
     return (
         <div style={{ display: "flex", fontFamily: "system-ui", fontSize: 15, color: "#111827" }}>
             {/* Left Sidebar */}
@@ -43,6 +44,10 @@ export default function Template2() {
                 )}
                 <h2 style={{ fontSize: 20, fontWeight: 600, marginBottom: 4 }}>{personal.firstName} {personal.lastName}</h2>
                 <p style={{ fontSize: 13 }}>{personal.email} · {personal.phone} · {personal.city}</p>
+                <p style={{ margin: '4px 0' }}>
+                    {personal.birthDay}/{personal.birthMonth}/{personal.birthYear} | {personal.maritalStatus} | {personal.nationality}
+                </p>
+
 
                 {show("skills", skills) && (
                     <SidebarSection title="Skills">

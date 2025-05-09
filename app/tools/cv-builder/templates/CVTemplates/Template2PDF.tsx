@@ -68,6 +68,11 @@ const styles = StyleSheet.create({
     listItem: {
         marginBottom: 3,
     },
+    small: {
+        fontSize: 11,
+        color: "#ffffff",
+        marginBottom: 8,
+    },
 });
 
 const getLevelLabel = (val: string | number): string => {
@@ -104,6 +109,13 @@ export default function Template2PDF() {
                 {personal.photo && <Image src={personal.photo} style={styles.photo} />}
                 <Text style={styles.name}>{personal.firstName} {personal.lastName}</Text>
                 <Text style={styles.contact}>{personal.email} · {personal.phone} · {personal.city}</Text>
+                <Text style={styles.small}>
+                    {(personal.birthDay ?? '').padStart(2, '0')}/
+                    {(personal.birthMonth ?? '').padStart(2, '0')}/
+                    {personal.birthYear ?? ''} | {personal.maritalStatus ?? ''} | {personal.nationality ?? ''}
+                </Text>
+
+
 
                 {show("skills", skills) && (
                     <SidebarSection title="Skills">
