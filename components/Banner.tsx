@@ -7,7 +7,8 @@ const Banner = () => {
         </h2>
         <p className="text-white text-base text-center mb-12">
           I specialize in Full Stack Development using React, Next.js, Node.js, WordPress, and more.
-          Let&apos;s turn your ideas into reality with modern, optimized, and responsive web applications.
+          Let&apos;s turn your ideas into reality with modern, optimized, and responsive web
+          applications.
         </p>
 
         <a

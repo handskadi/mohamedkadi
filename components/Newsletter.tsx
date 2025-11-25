@@ -34,7 +34,6 @@ const Newsletter = () => {
       } else {
         setMessage("❌ Subscription failed. Please try again.");
       }
-
     } catch (error) {
       setMessage("❌ An error occurred. Please try again later.");
     } finally {
@@ -56,12 +55,15 @@ const Newsletter = () => {
       <form onSubmit={handleSubmit} className="max-w-screen-md mx-auto mt-8">
         <div className="flex flex-col sm:flex-row items-center gap-3">
           <div className="relative w-full">
-            <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
+            <FaEnvelope
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+              size={20}
+            />
             <input
               type="email"
               placeholder="Enter your email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
               disabled={loading}
               className="pl-10 p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:rounded-none sm:rounded-l-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -77,9 +79,7 @@ const Newsletter = () => {
         </div>
 
         {message && (
-          <p className="mt-4 text-sm text-center text-blue-600 dark:text-blue-400">
-            {message}
-          </p>
+          <p className="mt-4 text-sm text-center text-blue-600 dark:text-blue-400">{message}</p>
         )}
 
         <p className="mt-4 text-sm text-gray-500 dark:text-gray-300 text-center">

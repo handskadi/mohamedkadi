@@ -6,28 +6,25 @@ import Link from "next/link";
 import { FiMenu, FiX, FiMoon, FiSun } from "react-icons/fi";
 import Image from "next/image";
 
-
 type NavLink =
   | {
-    name: string;
-    href: string;
-    submenu?: false;
-  }
+      name: string;
+      href: string;
+      submenu?: false;
+    }
   | {
-    name: string;
-    href: string;
-    submenu: true;
-    items: { name: string; href: string }[];
-  };
-
-
+      name: string;
+      href: string;
+      submenu: true;
+      items: { name: string; href: string }[];
+    };
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const pathname = usePathname();
-  let closeTimer = useRef<NodeJS.Timeout | null>(null);
+  const closeTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
@@ -69,13 +66,11 @@ export default function Navbar() {
       items: [
         { name: "Image Compressor", href: "/tools/image-compressor" },
         { name: "Favicon Generator", href: "/tools/favicon-generator" },
-        { name: "CV Builder", href: "/tools/cv-builder" }
-
+        { name: "CV Builder", href: "/tools/cv-builder" },
       ],
     },
     { name: "Contact", href: "/#contact" },
   ];
-
 
   return (
     <nav className="w-full fixed top-0 left-0 z-50 shadow-md bg-background transition-colors">
@@ -87,7 +82,7 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex flex-grow justify-center">
           <ul className="flex space-x-6 items-center">
-            {links.map((item) =>
+            {links.map(item =>
               item.submenu ? (
                 <li
                   key={item.name}
@@ -101,16 +96,10 @@ export default function Navbar() {
                   }}
                 >
                   <div className="flex items-center gap-1 group text-foreground hover:text-blue-500 transition-colors">
-                    <Link
-                      href={item.href!}
-                      className="hover:underline group-hover:text-blue-500"
-                    >
+                    <Link href={item.href!} className="hover:underline group-hover:text-blue-500">
                       {item.name}
                     </Link>
-                    <button
-                      aria-label="Toggle submenu"
-                      className="hover:text-blue-500"
-                    >
+                    <button aria-label="Toggle submenu" className="hover:text-blue-500">
                       <svg
                         className={`w-4 h-4 transition-transform duration-200 ${submenuOpen ? "rotate-180" : "rotate-0"}`}
                         fill="none"
@@ -123,15 +112,13 @@ export default function Navbar() {
                     </button>
                   </div>
 
-
                   {submenuOpen && (
                     <ul className="absolute left-0 mt-2 w-52 bg-background  border border-gray-200  shadow-lg rounded opacity-100 transition-opacity duration-300 ease-in-out z-50">
-                      {item.items.map((subitem) => (
+                      {item.items.map(subitem => (
                         <li key={subitem.href}>
                           <Link
                             href={subitem.href}
                             className="block px-4 py-3 text-base text-foreground hover:bg-background border-b border-gray-200"
-
                           >
                             {subitem.name}
                           </Link>
@@ -144,7 +131,7 @@ export default function Navbar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    onClick={(e) => scrollIfOnHome(e, item.href!.replace("/", ""))}
+                    onClick={e => scrollIfOnHome(e, item.href!.replace("/", ""))}
                     className="text-foreground hover:text-blue-500 transition-colors"
                   >
                     {item.name}
@@ -174,7 +161,7 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-background shadow-lg">
           <ul className="space-y-2 p-4">
-            {links.map((item) =>
+            {links.map(item =>
               item.submenu ? (
                 <li key={item.name}>
                   <div className="flex justify-between items-center">
@@ -207,10 +194,11 @@ export default function Navbar() {
 
                   {/* Submenu items */}
                   <ul
-                    className={`pl-4 mt-2 space-y-1 transition-all duration-300 ease-in-out overflow-hidden ${submenuOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
-                      }`}
+                    className={`pl-4 mt-2 space-y-1 transition-all duration-300 ease-in-out overflow-hidden ${
+                      submenuOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                    }`}
                   >
-                    {item.items.map((subitem) => (
+                    {item.items.map(subitem => (
                       <li key={subitem.href}>
                         <Link
                           href={subitem.href}
@@ -227,7 +215,7 @@ export default function Navbar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    onClick={(e) => scrollIfOnHome(e, item.href!.replace("/", ""))}
+                    onClick={e => scrollIfOnHome(e, item.href!.replace("/", ""))}
                     className="block text-foreground hover:text-blue-500"
                   >
                     {item.name}

@@ -5,18 +5,18 @@ import Footer from "@/components/Footer";
 import Script from "next/script";
 import "./globals.css";
 
-
-
 export const metadata: Metadata = {
   title: "Mohamed KADI | Full Stack Developer | MERN, Next.js, WordPress",
-  description: "Mohamed KADI, a Full Stack Developer, specializes in MERN, React, Next.js, and WordPress, crafting custom themes, plugins & scalable Python apps with Flask.",
+  description:
+    "Mohamed KADI, a Full Stack Developer, specializes in MERN, React, Next.js, and WordPress, crafting custom themes, plugins & scalable Python apps with Flask.",
   authors: [
     {
       name: "Mohamed KADI",
       url: "https://mohamedkadi.com",
-    }
+    },
   ],
-  keywords: "Full Stack Developer, MERN, React, Next.js, WordPress, Flask, Python, Web Development, Custom Themes, Plugins",
+  keywords:
+    "Full Stack Developer, MERN, React, Next.js, WordPress, Flask, Python, Web Development, Custom Themes, Plugins",
   alternates: {
     canonical: "https://mohamedkadi.com/",
   },
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     images: ["https://mohamedkadi.com/mohamedkadi.jpg"],
   },
 };
-const GTM_ID = 'GTM-54SPGC3S';
+const GTM_ID = "GTM-54SPGC3S";
 
 export default function RootLayout({
   children,
@@ -91,14 +91,14 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              "name": "Mohamed KADI",
-              "url": "https://mohamedkadi.com",
-              "jobTitle": "Full Stack Developer",
-              "worksFor": {
+              name: "Mohamed KADI",
+              url: "https://mohamedkadi.com",
+              jobTitle: "Full Stack Developer",
+              worksFor: {
                 "@type": "Organization",
-                "name": "Freelance",
+                name: "Freelance",
               },
-              "knowsAbout": [
+              knowsAbout: [
                 "Full Stack Development",
                 "React",
                 "Next.js",
@@ -108,13 +108,13 @@ export default function RootLayout({
                 "Plugins",
                 "Flask",
                 "Python",
-                "API Development"
+                "API Development",
               ],
-              "sameAs": [
+              sameAs: [
                 "https://www.linkedin.com/in/mohamedkadi",
                 "https://github.com/handskadi",
-                "https://twitter.com/handskadi"
-              ]
+                "https://twitter.com/handskadi",
+              ],
             }),
           }}
         />

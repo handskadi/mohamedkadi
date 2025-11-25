@@ -3,22 +3,26 @@ import { FaCode, FaLaptopCode, FaLock, FaRocket, FaCloud, FaUsers } from "react-
 const features = [
   {
     title: "Full Stack Development",
-    description: "Expertise in building scalable web applications using React, Next.js, Node.js, and Express.js.",
+    description:
+      "Expertise in building scalable web applications using React, Next.js, Node.js, and Express.js.",
     icon: <FaCode className="text-blue-500 text-4xl" />,
   },
   {
     title: "Performance Optimization",
-    description: "Delivering blazing-fast websites with optimized SEO, caching, and server-side rendering.",
+    description:
+      "Delivering blazing-fast websites with optimized SEO, caching, and server-side rendering.",
     icon: <FaRocket className="text-purple-500 text-4xl" />,
   },
   {
     title: "Cybersecurity Best Practices",
-    description: "Implementing secure authentication, authorization, and data protection for web applications.",
+    description:
+      "Implementing secure authentication, authorization, and data protection for web applications.",
     icon: <FaLock className="text-red-500 text-4xl" />,
   },
   {
     title: "Cloud & Deployment",
-    description: "Deploying applications on Vercel, AWS, and DigitalOcean with CI/CD and best DevOps practices.",
+    description:
+      "Deploying applications on Vercel, AWS, and DigitalOcean with CI/CD and best DevOps practices.",
     icon: <FaCloud className="text-green-500 text-4xl" />,
   },
   {
@@ -28,7 +32,8 @@ const features = [
   },
   {
     title: "Global Reach & Collaboration",
-    description: "Collaborating with international clients and teams for remote software development.",
+    description:
+      "Collaborating with international clients and teams for remote software development.",
     icon: <FaUsers className="text-blue-600 text-4xl" />,
   },
 ];
@@ -54,7 +59,9 @@ const Features = () => {
             >
               {feature.icon}
               <h3 className="text-slate-900 text-lg font-semibold my-4">{feature.title}</h3>
-              <p className="text-slate-500 text-sm font-medium leading-relaxed">{feature.description}</p>
+              <p className="text-slate-500 text-sm font-medium leading-relaxed">
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>

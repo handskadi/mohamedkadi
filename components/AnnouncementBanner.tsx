@@ -43,7 +43,8 @@ const AnnouncementBanner = () => {
           <svg viewBox="0 0 2 2" aria-hidden="true" className="mx-2 inline size-0.5 fill-current">
             <circle r={1} cx={1} cy={1} />
           </svg>
-          Get **15% OFF** on all **Full Stack Development** services if you contact us before the end of this month!
+          Get **15% OFF** on all **Full Stack Development** services if you contact us before the
+          end of this month!
         </p>
         <a
           href="#contact"

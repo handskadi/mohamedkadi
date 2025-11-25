@@ -20,7 +20,9 @@ const Contact: React.FC = () => {
 
     // Validation
     if (!name || !email || message.split(" ").length < 5) {
-      setError("Please fill in all required fields and make sure your message is at least 5 words.");
+      setError(
+        "Please fill in all required fields and make sure your message is at least 5 words."
+      );
       setLoading(false);
       return;
     }
@@ -55,7 +57,11 @@ const Contact: React.FC = () => {
             </p>
 
             <ContactDetail icon="🏠" title="Our Location" content="Mhaimid, Marrakech, Morocco" />
-            <ContactDetail icon="📞" title="Phone & WhatsApp" content="+212 651 456 226 | +212 616 979 335" />
+            <ContactDetail
+              icon="📞"
+              title="Phone & WhatsApp"
+              content="+212 651 456 226 | +212 616 979 335"
+            />
             <ContactDetail icon="✉️" title="Email Address" content="contact@mohamedkadi.com" />
           </div>
 
@@ -63,11 +69,19 @@ const Contact: React.FC = () => {
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
             {success ? (
               <div className="text-green-600 text-center">
-                <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <svg
+                  className="w-16 h-16 mx-auto mb-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
                 <h3 className="text-xl font-bold mb-2">Message sent successfully!</h3>
-                <p className="text-gray-600 dark:text-gray-300">Thank you for reaching out. I’ll be in touch shortly.</p>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Thank you for reaching out. I’ll be in touch shortly.
+                </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>

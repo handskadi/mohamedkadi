@@ -1,0 +1,21 @@
+{
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "rules": {
+    "@typescript-eslint/no-empty-object-type": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-unused-vars": [
+      "off",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-img-element": "off",
+    "jsx-a11y/alt-text": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/triple-slash-reference": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "prefer-const": "warn"
+  }
+}

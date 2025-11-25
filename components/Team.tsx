@@ -1,5 +1,12 @@
 import Image from "next/image";
-import { FaLinkedin, FaGithub, FaStackOverflow, FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaGithub,
+  FaStackOverflow,
+  FaTwitter,
+  FaFacebook,
+  FaInstagram,
+} from "react-icons/fa";
 
 const teamMembers = [
   {
@@ -64,32 +71,68 @@ const Team = () => {
               {/* ✅ Social Links */}
               <div className="mt-4 flex justify-center md:justify-start space-x-4">
                 {member.social.linkedin && (
-                  <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-blue-700" aria-label="LinkedIn Profile">
+                  <a
+                    href={member.social.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-500 hover:text-blue-700"
+                    aria-label="LinkedIn Profile"
+                  >
                     <FaLinkedin size={20} />
                   </a>
                 )}
                 {member.social.github && (
-                  <a href={member.social.github} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-black" aria-label="Github Profile">
+                  <a
+                    href={member.social.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-500 hover:text-black"
+                    aria-label="Github Profile"
+                  >
                     <FaGithub size={20} />
                   </a>
                 )}
                 {member.social.stackoverflow && (
-                  <a href={member.social.stackoverflow} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-orange-600" aria-label="StackOverflow Profile">
+                  <a
+                    href={member.social.stackoverflow}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-500 hover:text-orange-600"
+                    aria-label="StackOverflow Profile"
+                  >
                     <FaStackOverflow size={20} />
                   </a>
                 )}
                 {member.social.twitter && (
-                  <a href={member.social.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-blue-400" aria-label="Twitter Profile">
+                  <a
+                    href={member.social.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-500 hover:text-blue-400"
+                    aria-label="Twitter Profile"
+                  >
                     <FaTwitter size={20} />
                   </a>
                 )}
                 {member.social.facebook && (
-                  <a href={member.social.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-blue-600" aria-label="FaceBook Profile">
+                  <a
+                    href={member.social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-500 hover:text-blue-600"
+                    aria-label="FaceBook Profile"
+                  >
                     <FaFacebook size={20} />
                   </a>
                 )}
                 {member.social.instagram && (
-                  <a href={member.social.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-pink-600" aria-label="Instagram Profile">
+                  <a
+                    href={member.social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-500 hover:text-pink-600"
+                    aria-label="Instagram Profile"
+                  >
                     <FaInstagram size={20} />
                   </a>
                 )}

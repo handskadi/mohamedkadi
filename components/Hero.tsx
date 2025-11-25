@@ -3,11 +3,15 @@ import { Typewriter } from "react-simple-typewriter";
 
 const Hero = () => {
   return (
-    <section className="grid md:grid-cols-2 items-center md:gap-4 gap-8 max-w-5xl max-md:max-w-md mx-auto px-6 my-20" id="home">
+    <section
+      className="grid md:grid-cols-2 items-center md:gap-4 gap-8 max-w-5xl max-md:max-w-md mx-auto px-6 my-20"
+      id="home"
+    >
       {/* ✅ Text Content */}
       <div className="max-md:order-1 max-md:text-center">
         <h1 className="text-foreground font-black md:text-4xl text-3xl md:leading-tight">
-          MOHAMED KADI<br />
+          MOHAMED KADI
+          <br />
           <span className="text-zinc-500 dark:text-gray-300">
             <Typewriter
               words={[
@@ -26,10 +30,15 @@ const Hero = () => {
           </span>
         </h1>
         <h2 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white md:text-4xl lg:text-4xl">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> ⵎⵓⵃⴰⵎⵎⴰⴷ</span> ⴽⴰⴷⵉ</h2>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+            {" "}
+            ⵎⵓⵃⴰⵎⵎⴰⴷ
+          </span>{" "}
+          ⴽⴰⴷⵉ
+        </h2>
         <p className="my-4 text-sm text-slate-600 dark:text-gray-400 leading-relaxed">
-          I specialize in creating high-performance web applications, scalable architectures, and modern UI/UX solutions.
-          Let&apos;s build your next great project together!
+          I specialize in creating high-performance web applications, scalable architectures, and
+          modern UI/UX solutions. Let&apos;s build your next great project together!
         </p>
 
         {/* ✅ CTA Button */}
@@ -42,7 +51,6 @@ const Hero = () => {
         >
           Contact Me
         </a>
-
       </div>
 
       {/* ✅ Hero Image */}

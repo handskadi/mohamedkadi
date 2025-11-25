@@ -17,12 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/ⵎⴰⴷ-ⴳⵉⵖ",
   ];
 
-  const blogRoutes = blogPosts.map((post) => `/blog/${post.slug}`);
-  const portfolioRoutes = portfolio.map((item) => `/portfolio/${item.slug}`);
+  const blogRoutes = blogPosts.map(post => `/blog/${post.slug}`);
+  const portfolioRoutes = portfolio.map(item => `/portfolio/${item.slug}`);
 
   const allRoutes = [...staticRoutes, ...blogRoutes, ...portfolioRoutes];
 
-  return allRoutes.map((route) => ({
+  return allRoutes.map(route => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
   }));

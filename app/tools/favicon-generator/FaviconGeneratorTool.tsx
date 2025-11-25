@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import Cropper from 'react-easy-crop';
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
-import { CloudUpload, Package } from 'lucide-react';
-import { getCroppedImg } from './utils/cropImage';
-import FaviconPreview from './FaviconPreview';
-import InstallationSection from './InstallationSection';
+import { useState, useCallback } from "react";
+import Cropper from "react-easy-crop";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
+import { CloudUpload, Package } from "lucide-react";
+import { getCroppedImg } from "./utils/cropImage";
+import FaviconPreview from "./FaviconPreview";
+import InstallationSection from "./InstallationSection";
 
 export default function FaviconGeneratorTool() {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -41,14 +41,14 @@ export default function FaviconGeneratorTool() {
     const generated: { size: number; blob: Blob }[] = [];
 
     for (const size of sizes) {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d')!;
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d")!;
       canvas.width = size;
       canvas.height = size;
       ctx.drawImage(baseImage, 0, 0, size, size);
 
-      const blob = await new Promise<Blob>((resolve) =>
-        canvas.toBlob((b) => b && resolve(b), 'image/png')
+      const blob = await new Promise<Blob>(resolve =>
+        canvas.toBlob(b => b && resolve(b), "image/png")
       );
       generated.push({ size, blob });
     }
@@ -75,28 +75,28 @@ export default function FaviconGeneratorTool() {
         })
     );
 
-    const res = await fetch('/api/generate-ico', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/generate-ico", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(filesToSend),
     });
 
     const icoBlob = await res.blob();
-    zip.file('favicon.ico', icoBlob);
+    zip.file("favicon.ico", icoBlob);
 
     // manifest.json
     const manifest = {
-      name: 'My Site',
+      name: "My Site",
       icons: icons.map(({ size }) => ({
         src: `favicon-${size}x${size}.png`,
         sizes: `${size}x${size}`,
-        type: 'image/png',
+        type: "image/png",
       })),
-      theme_color: '#ffffff',
-      background_color: '#ffffff',
-      display: 'standalone',
+      theme_color: "#ffffff",
+      background_color: "#ffffff",
+      display: "standalone",
     };
-    zip.file('site.webmanifest', JSON.stringify(manifest, null, 2));
+    zip.file("site.webmanifest", JSON.stringify(manifest, null, 2));
 
     // meta.html
     const meta = `
@@ -109,10 +109,10 @@ export default function FaviconGeneratorTool() {
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="/favicon-192x192.png">
     `.trim();
-    zip.file('meta.html', meta);
+    zip.file("meta.html", meta);
 
-    const timestamp = new Date().toISOString().replace(/[:T]/g, '-').slice(0, 16);
-    const blob = await zip.generateAsync({ type: 'blob' });
+    const timestamp = new Date().toISOString().replace(/[:T]/g, "-").slice(0, 16);
+    const blob = await zip.generateAsync({ type: "blob" });
     saveAs(blob, `compressed-icons-by-mohamedkadi.com-${timestamp}.zip`);
   };
 
@@ -121,7 +121,7 @@ export default function FaviconGeneratorTool() {
       const img = new Image();
       img.onload = () => resolve(img);
       img.onerror = reject;
-      img.crossOrigin = 'anonymous';
+      img.crossOrigin = "anonymous";
       img.src = url;
     });
   };
@@ -159,7 +159,6 @@ export default function FaviconGeneratorTool() {
         <>
           <div className="flex justify-center items-center w-full min-h-[300px] px-4">
             <div className="flex flex-col md:flex-row w-full max-w-4xl gap-6">
-
               {/* LEFT: Canvas */}
               <div className="flex-1 flex items-center justify-center bg-gray-100 rounded p-4">
                 <div className="relative w-full max-w-[280px] aspect-square bg-black rounded-lg overflow-hidden">
@@ -187,7 +186,7 @@ export default function FaviconGeneratorTool() {
                       max={3}
                       step={0.1}
                       value={zoom}
-                      onChange={(e) => setZoom(Number(e.target.value))}
+                      onChange={e => setZoom(Number(e.target.value))}
                       className="w-full cursor-pointer"
                     />
                   </div>
@@ -198,7 +197,7 @@ export default function FaviconGeneratorTool() {
                     className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 font-medium cursor-pointer"
                     disabled={loading}
                   >
-                    {loading ? 'Generating...' : 'Generate Icons'}
+                    {loading ? "Generating..." : "Generate Icons"}
                   </button>
 
                   {/* Clear & Upload New */}
@@ -214,19 +213,19 @@ export default function FaviconGeneratorTool() {
                   </button>
                 </div>
               </div>
-
             </div>
           </div>
-
         </>
       )}
 
       {icons.length > 0 && (
         <>
           <div className="mt-10 grid grid-cols-3 gap-4">
-            {icons.map((icon) => (
+            {icons.map(icon => (
               <div key={icon.size} className="text-center">
-                <p className="text-xs mb-1">{icon.size}x{icon.size}</p>
+                <p className="text-xs mb-1">
+                  {icon.size}x{icon.size}
+                </p>
                 <img
                   src={URL.createObjectURL(icon.blob)}
                   alt={`icon-${icon.size}`}
@@ -238,7 +237,6 @@ export default function FaviconGeneratorTool() {
 
           {icons.length > 0 && (
             <div className="mt-10">
-
               <FaviconPreview
                 faviconBlob={icons.find(i => i.size === 32)?.blob!}
                 mode="light"
@@ -250,11 +248,8 @@ export default function FaviconGeneratorTool() {
                   setZoom(1);
                 }}
               />
-
             </div>
-
           )}
-
 
           <div className="mt-6 text-center">
             <button

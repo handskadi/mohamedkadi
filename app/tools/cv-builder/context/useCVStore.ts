@@ -77,11 +77,7 @@ type CVState = {
 
   languages: { name: string; level: string }[];
   addLanguage: () => void;
-  updateLanguage: (
-    i: number,
-    key: keyof CVState["languages"][number],
-    value: string
-  ) => void;
+  updateLanguage: (i: number, key: keyof CVState["languages"][number], value: string) => void;
   removeLanguage: (i: number) => void;
 
   courses: {
@@ -92,11 +88,7 @@ type CVState = {
     description: string;
   }[];
   addCourse: () => void;
-  updateCourse: (
-    i: number,
-    key: keyof CVState["courses"][number],
-    value: string
-  ) => void;
+  updateCourse: (i: number, key: keyof CVState["courses"][number], value: string) => void;
   removeCourse: (i: number) => void;
 
   publications: string[];
@@ -119,19 +111,11 @@ type CVState = {
   updateObjective: (value: string) => void;
 
   addExperience: () => void;
-  updateExperience: (
-    index: number,
-    key: keyof ExperienceItem,
-    value: string
-  ) => void;
+  updateExperience: (index: number, key: keyof ExperienceItem, value: string) => void;
   removeExperience: (index: number) => void;
 
   addEducation: () => void;
-  updateEducation: (
-    index: number,
-    key: keyof EducationItem,
-    value: string
-  ) => void;
+  updateEducation: (index: number, key: keyof EducationItem, value: string) => void;
   removeEducation: (index: number) => void;
 
   addSkill: () => void;
@@ -139,19 +123,11 @@ type CVState = {
   removeSkill: (index: number) => void;
 
   addInterest: () => void;
-  updateInterest: (
-    index: number,
-    key: keyof InterestItem,
-    value: string
-  ) => void;
+  updateInterest: (index: number, key: keyof InterestItem, value: string) => void;
   removeInterest: (index: number) => void;
 
   addReference: () => void;
-  updateReference: (
-    index: number,
-    key: keyof ReferenceItem,
-    value: string
-  ) => void;
+  updateReference: (index: number, key: keyof ReferenceItem, value: string) => void;
   removeReference: (index: number) => void;
 
   setSelectedTemplate: (id: string) => void;
@@ -159,7 +135,7 @@ type CVState = {
 
 export const useCVStore = create<CVState>()(
   persist(
-    (set) => ({
+    set => ({
       personal: {
         firstName: "",
         lastName: "",
@@ -197,105 +173,99 @@ export const useCVStore = create<CVState>()(
       ],
       hiddenSections: [],
 
-      reorderSections: (keys) => set(() => ({ visibleSections: keys })),
-      toggleSection: (key) =>
-        set((s) => ({
+      reorderSections: keys => set(() => ({ visibleSections: keys })),
+      toggleSection: key =>
+        set(s => ({
           visibleSections: s.visibleSections.includes(key)
-            ? s.visibleSections.filter((k) => k !== key)
+            ? s.visibleSections.filter(k => k !== key)
             : [...s.visibleSections, key],
         })),
-      togglePreviewSection: (key) =>
-        set((s) => ({
+      togglePreviewSection: key =>
+        set(s => ({
           hiddenSections: s.hiddenSections.includes(key)
-            ? s.hiddenSections.filter((k) => k !== key)
+            ? s.hiddenSections.filter(k => k !== key)
             : [...s.hiddenSections, key],
         })),
 
       languages: [],
-      addLanguage: () =>
-        set((s) => ({ languages: [...s.languages, { name: "", level: "" }] })),
+      addLanguage: () => set(s => ({ languages: [...s.languages, { name: "", level: "" }] })),
       updateLanguage: (i, key, value) =>
-        set((s) => {
+        set(s => {
           const updated = [...s.languages];
           updated[i] = { ...updated[i], [key]: value };
           return { languages: updated };
         }),
-      removeLanguage: (i) =>
-        set((s) => ({ languages: s.languages.filter((_, idx) => idx !== i) })),
+      removeLanguage: i => set(s => ({ languages: s.languages.filter((_, idx) => idx !== i) })),
 
       courses: [],
       addCourse: () =>
-        set((s) => ({
+        set(s => ({
           courses: [
             ...s.courses,
             { name: "", institution: "", start: "", end: "", description: "" },
           ],
         })),
       updateCourse: (i, key, value) =>
-        set((s) => {
+        set(s => {
           const updated = [...s.courses];
           updated[i] = { ...updated[i], [key]: value };
           return { courses: updated };
         }),
-      removeCourse: (i) =>
-        set((s) => ({ courses: s.courses.filter((_, idx) => idx !== i) })),
+      removeCourse: i => set(s => ({ courses: s.courses.filter((_, idx) => idx !== i) })),
 
       publications: [],
-      addPublication: () =>
-        set((s) => ({ publications: [...s.publications, ""] })),
+      addPublication: () => set(s => ({ publications: [...s.publications, ""] })),
       updatePublication: (i, value) =>
-        set((s) => {
+        set(s => {
           const updated = [...s.publications];
           updated[i] = value;
           return { publications: updated };
         }),
-      removePublication: (i) =>
-        set((s) => ({
+      removePublication: i =>
+        set(s => ({
           publications: s.publications.filter((_, idx) => idx !== i),
         })),
 
       achievements: [],
-      addAchievement: () =>
-        set((s) => ({ achievements: [...s.achievements, ""] })),
+      addAchievement: () => set(s => ({ achievements: [...s.achievements, ""] })),
       updateAchievement: (i, value) =>
-        set((s) => {
+        set(s => {
           const updated = [...s.achievements];
           updated[i] = value;
           return { achievements: updated };
         }),
-      removeAchievement: (i) =>
-        set((s) => ({
+      removeAchievement: i =>
+        set(s => ({
           achievements: s.achievements.filter((_, idx) => idx !== i),
         })),
 
       customSections: [],
-      addCustomSection: () =>
-        set((s) => ({ customSections: [...s.customSections, ""] })),
+      addCustomSection: () => set(s => ({ customSections: [...s.customSections, ""] })),
       updateCustomSection: (i, value) =>
-        set((s) => {
+        set(s => {
           const updated = [...s.customSections];
           updated[i] = value;
           return { customSections: updated };
         }),
-      removeCustomSection: (i) =>
-        set((s) => ({
+      removeCustomSection: i =>
+        set(s => ({
           customSections: s.customSections.filter((_, idx) => idx !== i),
         })),
 
       updatePersonal: (key, value) =>
-        set((state) => ({
+        set(state => ({
           personal: { ...state.personal, [key]: value },
         })),
 
-      setPersonalPhoto: (photo) =>
-        set((state) => ({
+      setPersonalPhoto: photo =>
+        set(state => ({
           personal: { ...state.personal, photo },
         })),
 
-      updateObjective: (value) => set(() => ({ objective: value })),
+      updateObjective: value => set(() => ({ objective: value })),
 
       addExperience: () =>
-        set((state) => ({
+        set(state => ({
           experience: [
             ...state.experience,
             {
@@ -310,18 +280,18 @@ export const useCVStore = create<CVState>()(
           ],
         })),
       updateExperience: (index, key, value) =>
-        set((state) => {
+        set(state => {
           const updated = [...state.experience];
           updated[index] = { ...updated[index], [key]: value };
           return { experience: updated };
         }),
-      removeExperience: (index) =>
-        set((state) => ({
+      removeExperience: index =>
+        set(state => ({
           experience: state.experience.filter((_, i) => i !== index),
         })),
 
       addEducation: () =>
-        set((state) => ({
+        set(state => ({
           education: [
             ...state.education,
             {
@@ -335,65 +305,62 @@ export const useCVStore = create<CVState>()(
           ],
         })),
       updateEducation: (index, key, value) =>
-        set((state) => {
+        set(state => {
           const updated = [...state.education];
           updated[index] = { ...updated[index], [key]: value };
           return { education: updated };
         }),
-      removeEducation: (index) =>
-        set((state) => ({
+      removeEducation: index =>
+        set(state => ({
           education: state.education.filter((_, i) => i !== index),
         })),
 
       addSkill: () =>
-        set((state) => ({
+        set(state => ({
           skills: [...state.skills, { name: "", level: "" }],
         })),
       updateSkill: (index, key, value) =>
-        set((state) => {
+        set(state => {
           const updated = [...state.skills];
           updated[index] = { ...updated[index], [key]: value };
           return { skills: updated };
         }),
-      removeSkill: (index) =>
-        set((state) => ({
+      removeSkill: index =>
+        set(state => ({
           skills: state.skills.filter((_, i) => i !== index),
         })),
 
       addInterest: () =>
-        set((state) => ({
+        set(state => ({
           interests: [...state.interests, { name: "" }],
         })),
       updateInterest: (index, key, value) =>
-        set((state) => {
+        set(state => {
           const updated = [...state.interests];
           updated[index] = { ...updated[index], [key]: value };
           return { interests: updated };
         }),
-      removeInterest: (index) =>
-        set((state) => ({
+      removeInterest: index =>
+        set(state => ({
           interests: state.interests.filter((_, i) => i !== index),
         })),
 
       addReference: () =>
-        set((state) => ({
-          references: [
-            ...state.references,
-            { company: "", person: "", phone: "", email: "" },
-          ],
+        set(state => ({
+          references: [...state.references, { company: "", person: "", phone: "", email: "" }],
         })),
       updateReference: (index, key, value) =>
-        set((state) => {
+        set(state => {
           const updated = [...state.references];
           updated[index] = { ...updated[index], [key]: value };
           return { references: updated };
         }),
-      removeReference: (index) =>
-        set((state) => ({
+      removeReference: index =>
+        set(state => ({
           references: state.references.filter((_, i) => i !== index),
         })),
 
-      setSelectedTemplate: (id) => set(() => ({ selectedTemplate: id })),
+      setSelectedTemplate: id => set(() => ({ selectedTemplate: id })),
     }),
     {
       name: "cv-storage",

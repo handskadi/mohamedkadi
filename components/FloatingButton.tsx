@@ -8,8 +8,6 @@ const Linkedin = dynamic(() => import("lucide-react").then(mod => mod.Linkedin))
 const MessageCircleMore = dynamic(() => import("lucide-react").then(mod => mod.MessageCircleMore));
 const Plus = dynamic(() => import("lucide-react").then(mod => mod.Plus));
 
-
-
 const FloatingButton = () => {
   const [isOpen, setIsOpen] = useState(false);
 

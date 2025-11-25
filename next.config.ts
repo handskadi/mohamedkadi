@@ -10,10 +10,6 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  i18n: {
-    locales: ["en", "fr", "de", "ar"],
-    defaultLocale: "en",
-  },
   async rewrites() {
     return [
       {

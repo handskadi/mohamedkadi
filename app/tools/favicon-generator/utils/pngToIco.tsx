@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import pngToIco from 'png-to-ico';
+import { NextRequest, NextResponse } from "next/server";
+import pngToIco from "png-to-ico";
 
-export const runtime = 'nodejs';
+export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,12 +18,12 @@ export async function POST(req: NextRequest) {
     return new NextResponse(icoBuffer, {
       status: 200,
       headers: {
-        'Content-Type': 'image/x-icon',
-        'Content-Disposition': 'attachment; filename="favicon.ico"',
+        "Content-Type": "image/x-icon",
+        "Content-Disposition": 'attachment; filename="favicon.ico"',
       },
     });
   } catch (err) {
-    console.error('[ICO ERROR]', err);
-    return new NextResponse('ICO generation failed', { status: 500 });
+    console.error("[ICO ERROR]", err);
+    return new NextResponse("ICO generation failed", { status: 500 });
   }
 }

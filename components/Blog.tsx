@@ -1,5 +1,5 @@
 import Image from "next/image";
-import blogPosts from '../data/blogPosts';
+import blogPosts from "../data/blogPosts";
 
 const Blog = () => {
   const featured = blogPosts.filter(p => p.featured);
@@ -9,7 +9,8 @@ const Blog = () => {
         {/* ✅ Blog Section Header */}
         <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white">Our Blog</h2>
         <p className="mt-4 text-lg text-gray-500 dark:text-gray-400">
-          Explore insights on web development, full stack solutions, and why having a strong digital presence is crucial for business success.
+          Explore insights on web development, full stack solutions, and why having a strong digital
+          presence is crucial for business success.
         </p>
       </div>
 
@@ -55,7 +56,12 @@ const Blog = () => {
                 className="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
               >
                 Read more
-                <svg className="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  className="ml-2 w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     fillRule="evenodd"
                     d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"

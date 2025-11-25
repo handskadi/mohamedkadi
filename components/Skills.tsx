@@ -19,7 +19,10 @@ const Skills: React.FC<SkillsProps> = ({
   subheading = "Technologies I Work With",
 }) => {
   return (
-    <section className="flex flex-col items-center justify-center px-6 text-center bg-[#F7F7F7] " id="skills">
+    <section
+      className="flex flex-col items-center justify-center px-6 text-center bg-[#F7F7F7] "
+      id="skills"
+    >
       {/* ✅ Heading & Subheading */}
       <div className="my-12 max-w-4xl">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{heading}</h2>

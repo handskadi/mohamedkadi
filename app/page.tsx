@@ -1,5 +1,5 @@
 "use client";
-import FaqAccordion from "../components/FAQ"
+import FaqAccordion from "../components/FAQ";
 import Hero from "../components/Hero";
 import Skills from "../components/Skills";
 import Banner from "../components/Banner";

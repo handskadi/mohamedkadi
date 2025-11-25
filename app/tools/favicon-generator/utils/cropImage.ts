@@ -10,20 +10,10 @@ export async function getCroppedImg(
   canvas.width = crop.width;
   canvas.height = crop.height;
 
-  ctx.drawImage(
-    image,
-    crop.x,
-    crop.y,
-    crop.width,
-    crop.height,
-    0,
-    0,
-    crop.width,
-    crop.height
-  );
+  ctx.drawImage(image, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
 
   return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
+    canvas.toBlob(blob => {
       if (blob) resolve(blob);
       else reject(new Error("Failed to crop image"));
     }, "image/png");

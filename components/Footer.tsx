@@ -42,16 +42,35 @@ export default function Footer() {
 
         {/* Right Section - Social Links */}
         <div className="mt-6 md:mt-0 flex space-x-4">
-          <a href="https://github.com/handskadi" target="_blank" className="text-xl hover:text-blue-500 transition-colors" aria-label="Github Profile">
+          <a
+            href="https://github.com/handskadi"
+            target="_blank"
+            className="text-xl hover:text-blue-500 transition-colors"
+            aria-label="Github Profile"
+          >
             <FaGithub />
           </a>
-          <a href="https://linkedin.com/in/mohamedkadi" target="_blank" className="text-xl hover:text-blue-500 transition-colors" aria-label="LinkedIn Profile">
+          <a
+            href="https://linkedin.com/in/mohamedkadi"
+            target="_blank"
+            className="text-xl hover:text-blue-500 transition-colors"
+            aria-label="LinkedIn Profile"
+          >
             <FaLinkedin />
           </a>
-          <a href="https://x.com/handskadi" target="_blank" className="text-xl hover:text-blue-500 transition-colors" aria-label="Twitter Profile">
+          <a
+            href="https://x.com/handskadi"
+            target="_blank"
+            className="text-xl hover:text-blue-500 transition-colors"
+            aria-label="Twitter Profile"
+          >
             <FaSquareXTwitter />
           </a>
-          <a href="mailto:handskadi@gmail.com" className="text-xl hover:text-blue-500 transition-colors" aria-label="Email Profile">
+          <a
+            href="mailto:handskadi@gmail.com"
+            className="text-xl hover:text-blue-500 transition-colors"
+            aria-label="Email Profile"
+          >
             <FaEnvelope />
           </a>
         </div>
