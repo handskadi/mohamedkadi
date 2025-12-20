@@ -3,6 +3,7 @@ import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
 import webpack from "webpack";
 
 const nextConfig: NextConfig = {
+  productionBrowserSourceMaps: true,
   transpilePackages: ["crypto-js"],
   typescript: {
     ignoreBuildErrors: true,

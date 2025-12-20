@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -81,6 +82,7 @@ export default function RootLayout({
 
         <Navbar />
         <main className="container mx-auto mt-8">{children}</main>
+        <SpeedInsights />
         <Footer />
         {/* ✅ Schema.org JSON-LD for Full Stack Developer */}
         <Script
