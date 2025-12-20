@@ -61,6 +61,7 @@ const Hero = () => {
           width={500}
           height={400}
           priority
+          fetchPriority="high"
           className="auto h-auto max-w-full max-h-[400px] md:max-h-[470px] object-contain dark:invert"
         />
       </div>

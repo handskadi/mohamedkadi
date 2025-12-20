@@ -12,6 +12,8 @@ const AboutMe = () => {
             alt="Mohamed KADI - Full Stack Developer"
             width={800}
             height={800}
+            priority
+            fetchPriority="high"
             className=""
           />
         </div>
