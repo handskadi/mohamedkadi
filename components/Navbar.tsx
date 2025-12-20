@@ -8,16 +8,16 @@ import Image from "next/image";
 
 type NavLink =
   | {
-      name: string;
-      href: string;
-      submenu?: false;
-    }
+    name: string;
+    href: string;
+    submenu?: false;
+  }
   | {
-      name: string;
-      href: string;
-      submenu: true;
-      items: { name: string; href: string }[];
-    };
+    name: string;
+    href: string;
+    submenu: true;
+    items: { name: string; href: string }[];
+  };
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -143,7 +143,10 @@ export default function Navbar() {
         </div>
 
         {/* Theme Toggle */}
-        <button onClick={toggleDarkMode} className="hidden md:block text-xl">
+        <button
+          onClick={toggleDarkMode}
+          className="hidden md:block text-xl"
+          aria-label="Toggle Dark Mode">
           {darkMode ? <FiSun className="text-yellow-500" /> : <FiMoon />}
         </button>
 
@@ -194,9 +197,8 @@ export default function Navbar() {
 
                   {/* Submenu items */}
                   <ul
-                    className={`pl-4 mt-2 space-y-1 transition-all duration-300 ease-in-out overflow-hidden ${
-                      submenuOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
-                    }`}
+                    className={`pl-4 mt-2 space-y-1 transition-all duration-300 ease-in-out overflow-hidden ${submenuOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                      }`}
                   >
                     {item.items.map(subitem => (
                       <li key={subitem.href}>
@@ -228,6 +230,7 @@ export default function Navbar() {
               <button
                 onClick={toggleDarkMode}
                 className="flex items-center w-full justify-center py-2"
+                aria-label="Toggle Dark Mode"
               >
                 {darkMode ? (
                   <>
