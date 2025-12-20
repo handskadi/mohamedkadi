@@ -56,7 +56,7 @@ const Blog = () => {
                 className="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
                 aria-label={`Read more about ${post.title}`}
               >
-                Read more
+                Read more <span className="sr-only"> about {post.title}</span>
                 <svg
                   className="ml-2 w-4 h-4"
                   fill="currentColor"
