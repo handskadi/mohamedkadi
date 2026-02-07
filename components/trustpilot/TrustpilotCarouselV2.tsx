@@ -1128,7 +1128,7 @@ export default function TrustpilotCarouselV2({
                                             <VerifiedBadge />
                                         </div>
 
-                                        <div className="mt-4 flex items-center gap-4">
+                                        <div className="mt-4 flex items-center gap-1">
                                             <Stars value={r.rating} size="sm" />
                                             <VerifiedBadge />
                                         </div>
