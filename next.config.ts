@@ -4,6 +4,15 @@ import webpack from "webpack";
 
 const nextConfig: NextConfig = {
   productionBrowserSourceMaps: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "user-images.trustpilot.com",
+        pathname: "/**",
+      },
+    ],
+  },
   transpilePackages: ["crypto-js"],
   typescript: {
     ignoreBuildErrors: true,
