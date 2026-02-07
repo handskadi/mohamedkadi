@@ -1,4 +1,3 @@
-"use client";
 import FaqAccordion from "../components/FAQ";
 import Hero from "../components/Hero";
 import Skills from "../components/Skills";
@@ -13,8 +12,12 @@ import Contact from "../components/Contact";
 import AboutMe from "../components/AboutMe ";
 import FloatingButton from "../components/FloatingButton";
 import ToolShowcase from "@/components/ToolShowcase";
+import { getTrustpilot } from "@/lib/getTrustpilot";
+import TrustpilotCarouselV2 from "@/components/trustpilot/TrustpilotCarouselV2";
 
-export default function Home() {
+export default async function Home() {
+  const data = await getTrustpilot();
+
   return (
     <>
       <Hero />
@@ -29,6 +32,15 @@ export default function Home() {
       <Blog />
       <Banner />
       <Newsletter />
+      <div className="mx-auto max-w-6xl p-6">
+        <TrustpilotCarouselV2
+          rate={data.rate}
+          reviewsNum={data.reviewsNum}
+          reviews={data.reviews}
+          trustpilotUrl={data.url}
+        />
+
+      </div>
       <Contact />
       <FloatingButton />
     </>

@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 
 interface FAQ {
@@ -82,9 +83,8 @@ const FaqAccordion: React.FC = () => {
             <span className="mr-4">{faq.question}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className={`w-[14px] h-[14px] fill-current ml-auto shrink-0 transition-transform duration-300 ${
-                activeIndex === index ? "rotate-180" : ""
-              }`}
+              className={`w-[14px] h-[14px] fill-current ml-auto shrink-0 transition-transform duration-300 ${activeIndex === index ? "rotate-180" : ""
+                }`}
               viewBox="0 0 24 24"
             >
               <path
@@ -95,9 +95,8 @@ const FaqAccordion: React.FC = () => {
             </svg>
           </button>
           <div
-            className={`overflow-hidden transition-all duration-300 ease-in-out ${
-              activeIndex === index ? "max-h-96" : "max-h-0"
-            }`}
+            className={`overflow-hidden transition-all duration-300 ease-in-out ${activeIndex === index ? "max-h-96" : "max-h-0"
+              }`}
           >
             <div className="px-4 pb-6">
               <p className="text-sm text-gray-600 leading-relaxed">{faq.answer}</p>
