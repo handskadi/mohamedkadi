@@ -952,7 +952,7 @@ export default function TrustpilotCarouselV2({
 
                         <div
                             ref={desktopScrollerRef}
-                            className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 pr-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                            className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2  pr-0 md:pr-2[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                         >
                             {reviews.slice(0, 12).map((r, idx) => {
                                 const name = r.consumer ?? "Anonymous";
@@ -1051,7 +1051,7 @@ export default function TrustpilotCarouselV2({
                             {mobileItems.map((item, idx) => {
                                 if (item.kind === "summary") {
                                     return (
-                                        <div key="summary" data-card className="w-[88%] shrink-0 snap-start rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                                        <div key="summary" data-card className="w-full md:w-[88%] shrink-0 snap-start rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
                                             <div className="flex flex-col items-center text-center">
                                                 <div className="text-3xl font-semibold tracking-tight text-gray-900">{label}</div>
 
@@ -1113,7 +1113,7 @@ export default function TrustpilotCarouselV2({
                                                 openReview(r);
                                             }
                                         }}
-                                        className="w-[88%] shrink-0 snap-start text-left rounded-2xl border border-gray-200 bg-white p-5 shadow-sm
+                                        className="w-full md:w-[88%] shrink-0 snap-start text-left rounded-2xl border border-gray-200 bg-white p-5 shadow-sm
                       focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
                                     >
                                         <div className="flex items-start justify-between gap-3">
